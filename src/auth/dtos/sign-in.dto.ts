@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsString,
@@ -9,6 +10,7 @@ import {
 } from 'class-validator';
 
 export class SignInDto {
+  @ApiProperty({ example: 'ahmed@example.com', type: String })
   @IsNotEmpty()
   @IsString()
   @ValidateIf((o) => !o.identifier || !o.identifier.includes('@')) // Check if it's not an email
@@ -19,11 +21,12 @@ export class SignInDto {
   @IsEmail({}, { message: 'identifier must be a valid email address' })
   identifier: string;
 
+  @ApiProperty({ example: 'password', type: String })
   @IsNotEmpty()
   @IsString()
   password: string;
 
+  @ApiProperty({ example: 'sd554', type: String, required: false })
   @IsOptional()
-  @IsUUID('4', { message: 'organization must be a valid UUID' })
   organization: string;
 }
