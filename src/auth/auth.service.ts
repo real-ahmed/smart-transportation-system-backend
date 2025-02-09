@@ -5,17 +5,23 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { UsersService } from '../users/users.service';
-import { EmployeesService } from '../employees/employees.service';
-import { UserStatus } from 'src/users/schemas/user.schema';
+import { UserAuthProvider } from './providers/user-auth.provider';
+import { EmployeeAuthProvider } from './providers/employee-auth.provider';
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
-    private usersService: UsersService,
-    private employeesService: EmployeesService,
+    private userAuthProvider: UserAuthProvider,
+    private employeeAuthProvider: EmployeeAuthProvider,
   ) {}
+
+  private readonly ERROR_MESSAGES = {
+    EMPLOYEE_NOT_FOUND: 'Employee account not found',
+    USER_NOT_FOUND: 'User account not found',
+    INVALID_PASSWORD: 'Invalid credentials',
+    INVALID_STATUS: 'Account is not active',
+  };
 
   async signIn(
     identifier: string,
@@ -23,21 +29,13 @@ export class AuthService {
     organization?: string,
   ): Promise<{ access_token: string }> {
     try {
-      let account: any = null;
-      if (organization) {
-        account = await this.employeesService.findByIdentifierAndOrganization(
-          identifier,
-          organization,
-        );
+      const authProvider = organization
+        ? this.employeeAuthProvider
+        : this.userAuthProvider;
 
-        if (!account) {
-          throw new Error('EMPLOYEE_NOT_FOUND');
-        }
-      } else {
-        account = await this.usersService.findByIdentifier(identifier);
-        if (!account || account.status !== UserStatus.ACTIVE) {
-          throw new Error('USER_NOT_FOUND');
-        }
+      const account = await authProvider.findAccount(identifier, organization);
+      if (!account || !authProvider.validateStatus(account)) {
+        throw new Error(organization ? 'EMPLOYEE_NOT_FOUND' : 'USER_NOT_FOUND');
       }
 
       const isPasswordValid = await bcrypt.compare(password, account.password);
@@ -45,27 +43,21 @@ export class AuthService {
         throw new Error('INVALID_PASSWORD');
       }
 
-      const payload = { account };
-
       return {
-        access_token: await this.jwtService.signAsync(payload),
+        access_token: await this.jwtService.signAsync({ account }),
       };
     } catch (error) {
-      if (
-        error.message === 'EMPLOYEE_NOT_FOUND' ||
-        error.message === 'USER_NOT_FOUND'
-      ) {
-        throw new UnauthorizedException('Account not found');
+      if (error.message in this.ERROR_MESSAGES) {
+        throw new UnauthorizedException(this.ERROR_MESSAGES[error.message]);
       }
-      if (error.message === 'INVALID_PASSWORD') {
-        throw new UnauthorizedException('Invalid credentials');
-      }
-      console.log(error);
       throw new InternalServerErrorException('Authentication failed');
     }
   }
 
-  async signUp(signUpDto: Record<string, any>) {
-    return this.usersService.create(signUpDto);
+  async signUp(signUpDto: Record<string, any>, isEmployee = false) {
+    const authProvider = isEmployee
+      ? this.employeeAuthProvider
+      : this.userAuthProvider;
+    return authProvider.createAccount(signUpDto);
   }
 }

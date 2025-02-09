@@ -8,9 +8,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { EmployeesModule } from './employees/employees.module';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from './auth/auth.guard';
+import { AuthGuard } from './common/guards/auth.guard';
 
 @Module({
   imports: [
@@ -25,14 +24,13 @@ import { AuthGuard } from './auth/auth.guard';
       }),
       inject: [ConfigService],
     }),
-    AuthModule, 
+    AuthModule,
     AdminModule,
     DriverModule,
     SupervisorModule,
     MemberModule,
     OrganizerModule,
     UsersModule,
-    EmployeesModule,
   ],
   providers: [
     {

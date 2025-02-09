@@ -6,23 +6,30 @@ import {
   IsOptional,
   IsEnum,
   IsPhoneNumber,
+  MaxLength,
+  MinLength,
+  Matches,
 } from 'class-validator';
-import { UserStatus } from '../../users/schemas/user.schema';
+import { UserStatus } from '../../users/enums/user-status.enum';
+import { Transform } from 'class-transformer';
 
 export class SignUpDto {
   @ApiProperty({ example: 'Ahmed', type: String })
-  @IsNotEmpty()
   @IsString()
+  @MinLength(2)
+  @MaxLength(50)
   firstName: string;
 
   @ApiProperty({ example: 'Emad', type: String })
-  @IsNotEmpty()
   @IsString()
+  @MinLength(2)
+  @MaxLength(50)
   lastName: string;
 
   @ApiProperty({ example: 'ahmed@example.com', type: String })
   @IsNotEmpty()
   @IsEmail()
+  @Transform(({ value }) => value.toLowerCase())
   email: string;
 
   @ApiProperty({ example: '+201017078859', type: String })
@@ -33,14 +40,10 @@ export class SignUpDto {
   @ApiProperty({ example: 'password', type: String })
   @IsNotEmpty()
   @IsString()
-  password: string;
-
-  @ApiProperty({
-    example: 'active',
-    enum: UserStatus,
-    default: UserStatus.ACTIVE,
+  @MinLength(8)
+  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+    message:
+      'Password must contain uppercase, lowercase, number/special character',
   })
-  @IsOptional()
-  @IsEnum(UserStatus)
-  status: UserStatus;
+  password: string;
 }
