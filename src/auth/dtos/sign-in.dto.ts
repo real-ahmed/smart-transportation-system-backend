@@ -26,7 +26,12 @@ export class SignInDto {
   @IsString()
   password: string;
 
-  @ApiProperty({ example: 'sd554', type: String, required: false })
+  @ApiProperty({
+    example: 'sd554',
+    type: String,
+    required: false,
+    description: 'Organization ID (use it for Driver or Supervisor auth only)',
+  })
   @IsOptional()
   organization: string;
 }

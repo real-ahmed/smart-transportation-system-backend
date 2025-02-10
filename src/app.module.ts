@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './common/guards/auth.guard';
+import { MONGOOSE_CONFIG } from './config/database.config';
 
 @Module({
   imports: [
@@ -17,13 +18,7 @@ import { AuthGuard } from './common/guards/auth.guard';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGO_URI'),
-      }),
-      inject: [ConfigService],
-    }),
+    MongooseModule.forRootAsync(MONGOOSE_CONFIG),
     AuthModule,
     AdminModule,
     DriverModule,

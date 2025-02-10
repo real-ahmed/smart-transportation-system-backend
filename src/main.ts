@@ -3,18 +3,13 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import appConfig from './config/app.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Set a global prefix
   app.setGlobalPrefix('api');
-
-  const port = process.env.PORT;
-  if (!port) {
-    throw new Error('PORT environment variable is not defined');
-  }
-
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
@@ -27,8 +22,8 @@ async function bootstrap() {
   SwaggerModule.setup('api-docs', app, document);
   app.useGlobalInterceptors(new TransformInterceptor());
 
-  await app.listen(port);
-  console.log(`Server is running on port ${port}`);
+  await app.listen(appConfig().PORT);
+  console.log(`Server is running on port ${appConfig().PORT}`);
 }
 
 bootstrap();
