@@ -17,7 +17,7 @@ export abstract class BaseUsersService<T extends BaseUser> {
   }
 
   async findById(id: string): Promise<T> {
-    const user = await this.model.findById(id);
+    const user = await this.model.findById(id).exec();
     if (!user) {
       throw new NotFoundException('User not found');
     }

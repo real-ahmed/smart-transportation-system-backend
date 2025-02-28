@@ -2,6 +2,7 @@
 
 import { Document, Types } from 'mongoose';
 import { BaseUser } from './base-user.schema';
+import { Organizer } from './organizer.schema';
 
 export type UserDocument = User & Document;
 
@@ -13,8 +14,7 @@ export class User extends BaseUser {
   @Prop({ type: Types.ObjectId, ref: 'Member', default: null })
   member: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'Organizer', default: null })
-  organizer: Types.ObjectId;
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
