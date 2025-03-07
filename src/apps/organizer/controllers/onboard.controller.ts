@@ -15,6 +15,7 @@ import { OrganizationDto } from '../dtos/organization.dto';
 import { Public } from 'src/common/decorators/public.decorator';
 import { User } from 'src/common/decorators/user.decorator';
 import { request } from 'http';
+import { OnboardDto } from '../dtos/onboard.dto ';
 
 @Controller('onboard')
 export class OnboardController {
@@ -24,7 +25,7 @@ export class OnboardController {
   @UseInterceptors(FileInterceptor('image'))
   onboard(
     @Req() request: Request,
-    @Body() body: OrganizationDto,
+    @Body() body: OnboardDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
     return this.onboardService.onboard(request, body, file);

@@ -3,6 +3,7 @@ import { OrganizationService } from '../services/organization.service';
 import { OrganizationDto } from '../dtos/organization.dto';
 import { OrganizersService } from 'src/users/services/organizers.service';
 import { AddressesService } from 'src/addresses/addresses.service';
+import { OnboardDto } from '../dtos/onboard.dto ';
 
 @Injectable()
 export class OnboardService {
@@ -14,7 +15,7 @@ export class OnboardService {
 
   async onboard(
     request: Request,
-    onboardDto: OrganizationDto,
+    onboardDto: OnboardDto,
     file: Express.Multer.File,
   ) {
     let organizer;

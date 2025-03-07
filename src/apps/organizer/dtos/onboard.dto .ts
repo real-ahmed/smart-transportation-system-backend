@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class OrganizationDto {
+export class OnboardDto {
   @ApiProperty({
     description: 'The name of the organization',
     example: 'al-salahat school',
@@ -49,46 +49,39 @@ export class OrganizationDto {
     format: 'binary',
     required: true,
   })
+  @IsOptional()
   @Type(() => String)
   image: any;
 
   @ApiProperty({
-    description: 'address id',
-    example: '67c18d60463df10605f7f1fd',
+    description: 'Street address of the organization',
+    example: '123 Main Street',
   })
   @IsString()
   @IsNotEmpty()
-  addressId: string;
+  street: string;
 
-  // @ApiProperty({
-  //   description: 'Street address of the organization',
-  //   example: '123 Main Street',
-  // })
-  // @IsString()
-  // @IsNotEmpty()
-  // street: string;
+  @ApiProperty({
+    description: 'City where the organization is located',
+    example: 'mansoura',
+  })
+  @IsString()
+  @IsNotEmpty()
+  city: string;
 
-  // @ApiProperty({
-  //   description: 'City where the organization is located',
-  //   example: 'mansoura',
-  // })
-  // @IsString()
-  // @IsNotEmpty()
-  // city: string;
+  @ApiProperty({
+    description: 'State or province where the organization is located',
+    example: 'Dakahlia',
+  })
+  @IsString()
+  @IsNotEmpty()
+  state: string;
 
-  // @ApiProperty({
-  //   description: 'State or province where the organization is located',
-  //   example: 'Dakahlia',
-  // })
-  // @IsString()
-  // @IsNotEmpty()
-  // state: string;
-
-  // @ApiProperty({
-  //   description: "Postal code for the organization's location",
-  //   example: '94105',
-  // })
-  // @IsPostalCode('any')
-  // @IsNotEmpty()
-  // postalCode: string;
+  @ApiProperty({
+    description: "Postal code for the organization's location",
+    example: '94105',
+  })
+  @IsPostalCode('any')
+  @IsNotEmpty()
+  postalCode: string;
 }

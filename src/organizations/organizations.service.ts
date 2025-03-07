@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model, ModifyResult, Types } from 'mongoose';
 import { Organization, OrganizationDocument } from './organization.schema';
 
 @Injectable()
@@ -28,8 +28,8 @@ export class OrganizationsService {
   }
 
   // Find all organizations
-  async findAll(): Promise<Organization[]> {
-    return this.organizationModel.find().populate('address').exec();
+  async findAll(filter?: any) {
+    return this.organizationModel.find(filter).exec();
   }
 
   // Find an organization by its ID
@@ -67,5 +67,31 @@ export class OrganizationsService {
       throw new Error('Organization not found');
     }
     return deletedOrganization;
+  }
+
+  async findOne(filter: any) {
+    return this.organizationModel.findOne(filter).exec();
+  }
+
+  async findOneAndUpdate(
+    filter: any,
+    update: any,
+    options?: any,
+  ): Promise<OrganizationDocument | null> {
+    const result: ModifyResult<OrganizationDocument> =
+      await this.organizationModel
+        .findOneAndUpdate(filter, update, { ...options, new: true })
+        .exec();
+
+    // Extract the document from the ModifyResult object
+    if (result && result.value) {
+      return result.value;
+    }
+
+    return null;
+  }
+
+  async findOneAndDelete(filter: any) {
+    return this.organizationModel.findOneAndDelete(filter).exec();
   }
 }
