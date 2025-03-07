@@ -72,12 +72,11 @@ export class OrganizationsService {
   async findOne(filter: any) {
     return this.organizationModel.findOne(filter).exec();
   }
-
   async findOneAndUpdate(
     filter: any,
     update: any,
     options?: any,
-  ): Promise<OrganizationDocument | null> {
+  ): Promise<ModifyResult<OrganizationDocument> | null> {
     return this.organizationModel
       .findOneAndUpdate(filter, update, options)
       .exec();
