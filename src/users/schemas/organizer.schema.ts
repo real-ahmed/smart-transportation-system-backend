@@ -8,7 +8,7 @@ export type OrganizerDocument = Organizer & Document;
 @Schema({ collection: 'organizers' })
 export class Organizer {
   _id: any;
-  @Prop({ type: Types.ObjectId, ref: 'User', default: null })
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   user: User;
 }
 

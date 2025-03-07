@@ -5,6 +5,7 @@ import {
   UseInterceptors,
   NestInterceptor,
   UploadedFile,
+  Req,
 } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -13,6 +14,7 @@ import { OnboardService } from '../services/onboard.service';
 import { OrganizationDto } from '../dtos/organization.dto';
 import { Public } from 'src/common/decorators/public.decorator';
 import { User } from 'src/common/decorators/user.decorator';
+import { request } from 'http';
 
 @Controller('onboard')
 export class OnboardController {
@@ -21,10 +23,10 @@ export class OnboardController {
   @ApiOperation({ summary: 'organizer onboard' })
   @UseInterceptors(FileInterceptor('image'))
   onboard(
+    @Req() request: Request,
     @Body() body: OrganizationDto,
     @UploadedFile() file: Express.Multer.File,
-    @User() user: any, // Extracting user from the request using the custom decorator
   ) {
-    return this.onboardService.onboard(user.account._id, body, file);
+    return this.onboardService.onboard(request, body, file);
   }
 }

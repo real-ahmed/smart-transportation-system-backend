@@ -7,6 +7,9 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserAuthProvider } from './providers/user-auth.provider';
 import { EmployeeAuthProvider } from './providers/employee-auth.provider';
+import { OrganizersService } from 'src/users/services/organizers.service';
+import { stringify } from 'querystring';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +17,7 @@ export class AuthService {
     private jwtService: JwtService,
     private userAuthProvider: UserAuthProvider,
     private employeeAuthProvider: EmployeeAuthProvider,
+    private organizersService: OrganizersService,
   ) {}
 
   private readonly ERROR_MESSAGES = {
@@ -44,7 +48,14 @@ export class AuthService {
       }
 
       return {
-        access_token: await this.jwtService.signAsync({ account }),
+        access_token: await this.jwtService.signAsync({
+          _id: account['_id'],
+          firstName: account['firstName'],
+          lastName: account['lastName'],
+          email: account['email'],
+          phone: account['phoneNumber'],
+          status: account['status'],
+        }),
       };
     } catch (error) {
       if (error.message in this.ERROR_MESSAGES) {
