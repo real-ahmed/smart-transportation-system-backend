@@ -29,15 +29,14 @@ export class OrganizationService {
       image: organizationDto.image,
       description: organizationDto.description,
       addressId: address._id,
-      ownerId: await this.organizerService.findByUser(request['user']['_id']),
+      ownerId: request['user']['organizer'],
     });
 
     return organization;
   }
 
   async findAll(request: Request) {
-    const userId = request['user']['_id'];
-    const organizer = await this.organizerService.findByUser(userId);
+    const organizer = request['user']['organizer'];
     if (!organizer) {
       return []; // Or throw an exception if an organizer is expected to exist
     }
@@ -46,11 +45,7 @@ export class OrganizationService {
   }
 
   async findOne(request: Request, id: string) {
-    // Get the current user's ID from the request
-    const userId = request['user']['_id'];
-
-    // Find the organizer associated with the user
-    const organizer = await this.organizerService.findByUser(userId);
+    const organizer = request['user']['organizer'];
     if (!organizer) {
       throw new NotFoundException('Organizer not found');
     }
@@ -74,11 +69,7 @@ export class OrganizationService {
     organizationDto: OrganizationDto,
     file?: Express.Multer.File,
   ) {
-    // Get the current user's ID from the request
-    const userId = request['user']['_id'];
-
-    // Find the organizer associated with the user
-    const organizer = await this.organizerService.findByUser(userId);
+    const organizer = request['user']['organizer'];
     if (!organizer) {
       throw new NotFoundException('Organizer not found');
     }
@@ -111,16 +102,11 @@ export class OrganizationService {
   }
 
   async remove(request: Request, id: string) {
-    // Get the current user's ID from the request
-    const userId = request['user']['_id'];
-
-    // Find the organizer associated with the user
-    const organizer = await this.organizerService.findByUser(userId);
+    const organizer = request['user']['organizer'];
     if (!organizer) {
       throw new NotFoundException('Organizer not found');
     }
 
-    // Delete the organization only if it belongs to the organizer
     const deletedOrganization =
       await this.organizationsService.findOneAndDelete({
         _id: id,

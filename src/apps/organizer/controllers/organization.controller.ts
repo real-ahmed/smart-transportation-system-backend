@@ -19,14 +19,17 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { AddressesService } from 'src/addresses/addresses.service';
 import { Address } from 'src/addresses/address.schema';
 import { request } from 'http';
+import { BaseOrganizerController } from './base-organizer.controller';
 
 @ApiTags('organization')
 @Controller('organization')
-export class OrganizationController {
+export class OrganizationController extends BaseOrganizerController {
   constructor(
     private readonly organizationService: OrganizationService,
     private readonly addressesService: AddressesService,
-  ) {}
+  ) {
+    super();
+  }
 
   @Post()
   @ApiOperation({ summary: 'Create an organization' })
