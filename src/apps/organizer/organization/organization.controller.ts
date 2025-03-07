@@ -12,14 +12,14 @@ import {
   Put,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { OrganizationService } from '../services/organization.service';
-import { OrganizationDto } from '../dtos/organization.dto';
+import { OrganizationService } from './organization.service';
+import { OrganizationDto } from './dtos/organization.dto';
 import { User } from 'src/common/decorators/user.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AddressesService } from 'src/addresses/addresses.service';
 import { Address } from 'src/addresses/address.schema';
 import { request } from 'http';
-import { BaseOrganizerController } from './base-organizer.controller';
+import { BaseOrganizerController } from '../base-organizer.controller';
 
 @ApiTags('organization')
 @Controller('organization')
@@ -77,6 +77,7 @@ export class OrganizationController extends BaseOrganizerController {
     description: 'The organization has been successfully updated.',
   })
   @ApiResponse({ status: 404, description: 'Organization not found.' })
+  @UseInterceptors(FileInterceptor('image'))
   update(
     @Param('id') id: string,
     @Body() updateOrganizationDto: OrganizationDto,

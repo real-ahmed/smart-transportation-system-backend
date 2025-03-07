@@ -78,17 +78,9 @@ export class OrganizationsService {
     update: any,
     options?: any,
   ): Promise<OrganizationDocument | null> {
-    const result: ModifyResult<OrganizationDocument> =
-      await this.organizationModel
-        .findOneAndUpdate(filter, update, { ...options, new: true })
-        .exec();
-
-    // Extract the document from the ModifyResult object
-    if (result && result.value) {
-      return result.value;
-    }
-
-    return null;
+    return this.organizationModel
+      .findOneAndUpdate(filter, update, options)
+      .exec();
   }
 
   async findOneAndDelete(filter: any) {

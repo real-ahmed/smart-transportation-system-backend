@@ -1,15 +1,16 @@
 import { Module } from '@nestjs/common';
 
-import { OnboardController } from './controllers/onboard.controller';
+import { OnboardController } from './onboard/onboard.controller';
 import { APP_GUARD, RouterModule, Routes } from '@nestjs/core';
-import { OnboardService } from './services/onboard.service';
+import { OnboardService } from './onboard/onboard.service';
 import { OrganizationsModule } from 'src/organizations/organizations.module';
 import { AddressesModule } from 'src/addresses/addresses.module';
-import { OrganizationController } from './controllers/organization.controller';
-import { OrganizationService } from './services/organization.service';
-import { OrganizersService } from 'src/users/services/organizers.service';
+import { OrganizationController } from './organization/organization.controller';
+import { OrganizationService } from './organization/organization.service';
 import { UsersModule } from 'src/users/users.module';
-import { OrganizerGuard } from './guards/organizer.guard';
+import { OrganizerGuard } from './common/guards/organizer.guard';
+import { OrganizationModule } from './organization/organization.module';
+import { OnboardModule } from './onboard/onboard.module';
 
 @Module({
   controllers: [OnboardController, OrganizationController],
@@ -23,6 +24,8 @@ import { OrganizerGuard } from './guards/organizer.guard';
         module: OrganizerModule,
       },
     ]),
+    OrganizationModule,
+    OnboardModule,
   ],
   providers: [
     OnboardService,

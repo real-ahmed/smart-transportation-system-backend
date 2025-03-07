@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { OrganizationsService } from 'src/organizations/organizations.service';
-import { OrganizationDto } from '../dtos/organization.dto';
+import { OrganizationDto } from './dtos/organization.dto';
 import { uploadFile } from 'src/common/helpers/file-upload.helper';
 import { Address } from 'src/addresses/address.schema';
 import { OrganizersService } from 'src/users/services/organizers.service';
@@ -79,7 +79,6 @@ export class OrganizationService {
     if (file) {
       imageUrl = await uploadFile(file, 'organizer');
     }
-
     // Prepare update data, merging DTO and new image URL
     const updateData = {
       ...organizationDto,

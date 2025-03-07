@@ -1,9 +1,9 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { OrganizationService } from '../services/organization.service';
-import { OrganizationDto } from '../dtos/organization.dto';
+import { OrganizationService } from '../organization/organization.service';
+import { OrganizationDto } from '../organization/dtos/organization.dto';
 import { OrganizersService } from 'src/users/services/organizers.service';
 import { AddressesService } from 'src/addresses/addresses.service';
-import { OnboardDto } from '../dtos/onboard.dto ';
+import { OnboardDto } from './dtos/onboard.dto ';
 
 @Injectable()
 export class OnboardService {

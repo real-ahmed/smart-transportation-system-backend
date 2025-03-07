@@ -1,5 +1,5 @@
 import { UseGuards, applyDecorators } from '@nestjs/common';
-import { OrganizerGuard } from '../guards/organizer.guard';
+import { OrganizerGuard } from './common/guards/organizer.guard';
 
 // Create a decorator that applies the guard
 export function OrganizerProtected() {
