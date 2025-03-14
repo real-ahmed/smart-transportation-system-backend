@@ -11,9 +11,18 @@ import {
   Matches,
 } from 'class-validator';
 import { UserStatus } from '../../users/enums/user-status.enum';
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 
 export class SignUpDto {
+  @ApiProperty({
+    description: 'Image file to upload ',
+    type: 'string',
+    format: 'binary',
+    required: true,
+  })
+  @Type(() => String)
+  image: any;
+
   @ApiProperty({ example: 'Ahmed', type: String })
   @IsString()
   @MinLength(2)

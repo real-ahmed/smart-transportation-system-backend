@@ -65,10 +65,14 @@ export class AuthService {
     }
   }
 
-  async signUp(signUpDto: Record<string, any>, isEmployee = false) {
+  async signUp(
+    signUpDto: Record<string, any>,
+    file: Express.Multer.File,
+    isEmployee = false,
+  ) {
     const authProvider = isEmployee
       ? this.employeeAuthProvider
       : this.userAuthProvider;
-    return authProvider.createAccount(signUpDto);
+    return authProvider.createAccount(signUpDto, file);
   }
 }

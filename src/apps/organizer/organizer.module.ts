@@ -11,12 +11,16 @@ import { UsersModule } from 'src/users/users.module';
 import { OrganizerGuard } from './common/guards/organizer.guard';
 import { OrganizationModule } from './organization/organization.module';
 import { OnboardModule } from './onboard/onboard.module';
+import { DriverController } from './driver/driver.controller';
+import { DriverModule } from '../driver/driver.module';
+import { DriverService } from './driver/driver.service';
 
 @Module({
-  controllers: [OnboardController, OrganizationController],
+  controllers: [OnboardController, OrganizationController, DriverController],
   imports: [
     UsersModule,
     OrganizationsModule,
+    DriverModule,
     AddressesModule,
     RouterModule.register([
       {
@@ -30,6 +34,7 @@ import { OnboardModule } from './onboard/onboard.module';
   providers: [
     OnboardService,
     OrganizationService,
+    DriverService,
     OrganizerGuard,
     {
       provide: 'MODULE_GUARD',

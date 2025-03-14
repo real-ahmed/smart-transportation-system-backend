@@ -18,6 +18,9 @@ export abstract class BaseUser {
   @Prop({ required: true })
   password: string;
 
+  @Prop({ required: false })
+  image: string;
+
   @Prop({ required: true, enum: UserStatus, default: UserStatus.ACTIVE })
   status: UserStatus;
 }

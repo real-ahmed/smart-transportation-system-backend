@@ -6,5 +6,8 @@ export interface IAuthProvider {
     organizationId?: string,
   ): Promise<BaseUser | null>;
   validateStatus(account: BaseUser): boolean;
-  createAccount(signUpDto: Record<string, any>): Promise<BaseUser>;
+  createAccount(
+    signUpDto: Record<string, any>,
+    file: Express.Multer.File,
+  ): Promise<BaseUser>;
 }

@@ -1,9 +1,17 @@
-import { Body, Controller, Post, HttpStatus } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  HttpStatus,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dtos/sign-in.dto';
 import { SignUpDto } from './dtos/sign-up.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Public } from 'src/common/decorators/public.decorator';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -41,7 +49,8 @@ export class AuthController {
     status: HttpStatus.BAD_REQUEST,
     description: 'Invalid input data',
   })
-  signUp(@Body() body: SignUpDto) {
-    return this.authService.signUp(body);
+  @UseInterceptors(FileInterceptor('image'))
+  signUp(@Body() body: SignUpDto, @UploadedFile() file: Express.Multer.File) {
+    return this.authService.signUp(body, file);
   }
 }
