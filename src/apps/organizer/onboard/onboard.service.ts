@@ -24,7 +24,7 @@ export class OnboardService {
       throw new ConflictException('User already onboarded as organizer');
     }
     organizer = await this.organizerService.create(request['user']['_id']);
-
+    request['user']['organizer'] = organizer;
     const address = await this.addressesService.create({
       street: onboardDto.street,
       city: onboardDto.city,
@@ -33,11 +33,6 @@ export class OnboardService {
       postalCode: onboardDto.postalCode,
     });
 
-    return this.organizationsService.create(
-      organizer,
-      address,
-      onboardDto,
-      file,
-    );
+    return this.organizationsService.create(request, address, onboardDto, file);
   }
 }
