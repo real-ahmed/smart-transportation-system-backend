@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ModifyResult, Types } from 'mongoose';
 import { Organization, OrganizationDocument } from './organization.schema';
+import { paginate } from 'src/common/helpers/pagination.helper';
 
 @Injectable()
 export class OrganizationsService {
@@ -27,9 +28,10 @@ export class OrganizationsService {
     return newOrganization.save();
   }
 
-  // Find all organizations
-  async findAll(filter?: any) {
-    return this.organizationModel.find(filter).exec();
+  async findAll(page: number = 1, limit: number = 10, filter: any = {}) {
+    const { offset } = paginate(page, limit);
+
+    return this.organizationModel.find(filter).skip(offset).limit(limit).exec();
   }
 
   // Find an organization by its ID

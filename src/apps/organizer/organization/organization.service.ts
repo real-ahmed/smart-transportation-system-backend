@@ -35,13 +35,15 @@ export class OrganizationService {
     return organization;
   }
 
-  async findAll(request: Request) {
+  async findAll(request: Request, page: number = 1, limit: number = 10) {
     const organizer = request['user']['organizer'];
     if (!organizer) {
       return []; // Or throw an exception if an organizer is expected to exist
     }
 
-    return this.organizationsService.findAll({ owner: organizer._id });
+    return this.organizationsService.findAll(page, limit, {
+      owner: organizer._id,
+    });
   }
 
   async findOne(request: Request, id: string) {

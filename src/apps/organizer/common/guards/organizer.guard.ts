@@ -18,6 +18,7 @@ export class OrganizerGuard implements CanActivate {
     const organizer = await this.organizerService.findByUser(
       request['user']['_id'],
     );
+
     if (!organizer) {
       throw new UnauthorizedException('User is not an organizer');
     }
