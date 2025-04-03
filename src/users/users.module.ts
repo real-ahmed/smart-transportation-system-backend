@@ -8,7 +8,8 @@ import { Organizer, OrganizerSchema } from './schemas/organizer.schema';
 import { OrganizersService } from './services/organizers.service';
 import { DriversService } from './services/drivers.service';
 import { Driver, DriverSchema } from './schemas/driver.schema';
-
+import { Supervisor, SupervisorSchema } from './schemas/supervisor.schema';
+import { SupervisorsService } from './services/supervisors.service';
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -16,6 +17,7 @@ import { Driver, DriverSchema } from './schemas/driver.schema';
       { name: Employee.name, schema: EmployeeSchema },
       { name: Organizer.name, schema: OrganizerSchema },
       { name: Driver.name, schema: DriverSchema },
+      { name: Supervisor.name, schema: SupervisorSchema },
     ]),
   ],
   providers: [
@@ -23,7 +25,14 @@ import { Driver, DriverSchema } from './schemas/driver.schema';
     EmployeesService,
     OrganizersService,
     DriversService,
+    SupervisorsService,
   ],
-  exports: [UsersService, EmployeesService, OrganizersService, DriversService],
+  exports: [
+    UsersService,
+    EmployeesService,
+    OrganizersService,
+    DriversService,
+    SupervisorsService,
+  ],
 })
 export class UsersModule {}

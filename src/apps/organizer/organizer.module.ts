@@ -14,14 +14,17 @@ import { OnboardModule } from './onboard/onboard.module';
 import { DriverController } from './driver/driver.controller';
 import { DriverModule } from '../driver/driver.module';
 import { DriverService } from './driver/driver.service';
-
+import { SupervisorModule } from './subervisor/supervisor.module';
+import { SupervisorService } from './subervisor/supervisor.service';
+import { SupervisorController } from './subervisor/supervisor.controller';
 @Module({
-  controllers: [OnboardController, OrganizationController, DriverController],
+  controllers: [OnboardController, OrganizationController, DriverController, SupervisorController],
   imports: [
     UsersModule,
     OrganizationsModule,
     DriverModule,
     AddressesModule,
+    SupervisorModule,
     RouterModule.register([
       {
         path: 'organizer',
@@ -35,6 +38,7 @@ import { DriverService } from './driver/driver.service';
     OnboardService,
     OrganizationService,
     DriverService,
+    SupervisorService,
     OrganizerGuard,
     {
       provide: 'MODULE_GUARD',

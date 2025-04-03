@@ -4,6 +4,7 @@ import { Organizer } from '../schemas/organizer.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model, Types } from 'mongoose';
 import { NotFoundException } from '@nestjs/common';
+import { getPaginatedResults } from 'src/common/helpers/pagination.helper';
 // import { UpdateOrganizerDto } from './dto/update-organizer.dto';
 
 @Injectable()
@@ -31,8 +32,8 @@ export class OrganizersService {
   }
 
   // Get all organizers
-  async findAll(): Promise<Organizer[]> {
-    return this.organizerModel.find().exec();
+  async findAll(page: number = 1, limit: number = 10, filter = {}) {
+    return getPaginatedResults(this.organizerModel, page, limit, filter);
   }
 
   // Get a specific organizer by ID

@@ -3,14 +3,14 @@ import { EmployeesService } from './employees.service';
 import { Driver } from '../schemas/driver.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { paginate } from 'src/common/helpers/pagination.helper';
+import { getPaginatedResults } from 'src/common/helpers/pagination.helper';
 
 @Injectable()
 export class DriversService {
   constructor(
     private readonly employeesService: EmployeesService,
     @InjectModel(Driver.name) protected readonly model: Model<Driver>,
-  ) {}
+  ) { }
 
   async create(createDto): Promise<Driver> {
     const employee = await this.employeesService.create(createDto);
@@ -20,9 +20,7 @@ export class DriversService {
   }
 
   async findAll(page: number = 1, limit: number = 10, filter = {}) {
-    const { offset } = paginate(page, limit);
-
-    return this.model.find(filter).skip(offset).limit(limit).exec();
+    return getPaginatedResults(this.model, page, limit, filter);
   }
 
   async findOne(id: string): Promise<Driver> {

@@ -10,6 +10,7 @@ import {
   UploadedFile,
   Req,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { OrganizationService } from './organization.service';
@@ -58,8 +59,12 @@ export class OrganizationController extends BaseOrganizerController {
   @Get()
   @ApiOperation({ summary: 'Get all organizations' })
   @ApiResponse({ status: 200, description: 'List of organizations.' })
-  findAll(@Req() request: Request) {
-    return this.organizationService.findAll(request);
+  findAll(
+    @Req() request: Request,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    return this.organizationService.findAll(request, Number(page), Number(limit));
   }
 
   @Get(':id')

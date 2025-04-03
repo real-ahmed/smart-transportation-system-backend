@@ -52,7 +52,7 @@ export class DriverController extends BaseOrganizerController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
   ) {
-    return this.driverService.findAll(request, page, limit);
+    return this.driverService.findAll(request, Number(page), Number(limit));
   }
   @Get(':id')
   @ApiOperation({ summary: 'Get a driver by ID' })
