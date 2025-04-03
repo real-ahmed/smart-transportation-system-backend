@@ -19,7 +19,12 @@ export class SupervisorService {
   }
 
   async findAll(request: Request, page: number = 1, limit: number = 10) {
-    return this.supervisorsService.findAll(page, limit,{});
+    const user = request['user'];
+    const employees = await this.supervisorsService.employeesService.findByOrganizationOwner(user.id);
+    const employeeIds = employees.map(employee => employee._id);
+    return this.supervisorsService.findAll(page, limit, {
+      employee: { $in: employeeIds }
+    });
   }
 
   async findOne(request: Request, id: string) {

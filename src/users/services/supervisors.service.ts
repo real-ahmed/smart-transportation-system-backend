@@ -8,9 +8,9 @@ import { Supervisor } from '../schemas/supervisor.schema';
 @Injectable()
 export class SupervisorsService {
   constructor(
-    private readonly employeesService: EmployeesService,
+    public readonly employeesService: EmployeesService,
     @InjectModel(Supervisor.name) protected readonly model: Model<Supervisor>,
-  ) {}
+  ) { }
 
   async create(createDto): Promise<Supervisor> {
     const employee = await this.employeesService.create(createDto);

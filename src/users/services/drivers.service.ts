@@ -8,7 +8,7 @@ import { getPaginatedResults } from 'src/common/helpers/pagination.helper';
 @Injectable()
 export class DriversService {
   constructor(
-    private readonly employeesService: EmployeesService,
+    public readonly employeesService: EmployeesService,
     @InjectModel(Driver.name) protected readonly model: Model<Driver>,
   ) { }
 
