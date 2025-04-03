@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { SupervisorService } from '../subervisor/supervisor.service';
+import { SupervisorService } from './supervisor.service';
 import { SupervisorController } from './supervisor.controller';
 import { UsersModule } from 'src/users/users.module';
 

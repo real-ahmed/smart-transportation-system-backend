@@ -14,9 +14,9 @@ import { OnboardModule } from './onboard/onboard.module';
 import { DriverController } from './driver/driver.controller';
 import { DriverModule } from '../driver/driver.module';
 import { DriverService } from './driver/driver.service';
-import { SupervisorModule } from './subervisor/supervisor.module';
-import { SupervisorService } from './subervisor/supervisor.service';
-import { SupervisorController } from './subervisor/supervisor.controller';
+import { SupervisorModule } from './supervisor/supervisor.module';
+import { SupervisorService } from './supervisor/supervisor.service';
+import { SupervisorController } from './supervisor/supervisor.controller';
 @Module({
   controllers: [OnboardController, OrganizationController, DriverController, SupervisorController],
   imports: [
