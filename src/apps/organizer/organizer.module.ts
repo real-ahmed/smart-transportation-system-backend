@@ -21,8 +21,19 @@ import { BusModule } from './bus/bus.module';
 import { BusController } from './bus/bus.controller';
 import { BusService } from './bus/bus.service';
 import { BusesModule } from 'src/buses/buses.module';
+import { MaintenanceController } from './bus/maintenance/maintenance.controller';
+import { MaintenanceModule } from './bus/maintenance/maintenance.module';
+import { MaintenancesModule } from 'src/buses/maintenances/maintenances.module';
+import { MaintenanceService } from './bus/maintenance/maintenance.service';
 @Module({
-  controllers: [OnboardController, OrganizationController, DriverController, SupervisorController, BusController],
+  controllers: [
+    OnboardController,
+    OrganizationController,
+    DriverController,
+    SupervisorController,
+    BusController,
+    MaintenanceController
+  ],
   imports: [
     UsersModule,
     OrganizationsModule,
@@ -39,6 +50,8 @@ import { BusesModule } from 'src/buses/buses.module';
     OnboardModule,
     BusModule,
     BusesModule,
+    MaintenanceModule,
+    MaintenancesModule,
   ],
   providers: [
     OnboardService,
@@ -47,6 +60,7 @@ import { BusesModule } from 'src/buses/buses.module';
     SupervisorService,
     BusService,
     OrganizerGuard,
+    MaintenanceService,
     {
       provide: 'MODULE_GUARD',
       useFactory: (guard: OrganizerGuard) => guard,
