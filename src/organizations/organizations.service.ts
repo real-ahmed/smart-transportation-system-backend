@@ -9,23 +9,15 @@ export class OrganizationsService {
   constructor(
     @InjectModel(Organization.name)
     private readonly organizationModel: Model<OrganizationDocument>,
-  ) {}
+  ) { }
 
   // Create a new organization
   async create(createOrganizationDto: any): Promise<Organization> {
-    const { name, type, image, description, addressId, ownerId } =
-      createOrganizationDto;
 
-    const newOrganization = new this.organizationModel({
-      name,
-      type,
-      image,
-      description,
-      address: addressId,
-      owner: ownerId,
-    });
 
-    return newOrganization.save();
+    const newOrganization = await this.organizationModel.create(createOrganizationDto);
+
+    return newOrganization;
   }
 
   async findAll(page: number = 1, limit: number = 10, filter: any = {}) {

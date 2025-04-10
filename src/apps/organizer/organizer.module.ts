@@ -17,8 +17,12 @@ import { DriverService } from './driver/driver.service';
 import { SupervisorModule } from './supervisor/supervisor.module';
 import { SupervisorService } from './supervisor/supervisor.service';
 import { SupervisorController } from './supervisor/supervisor.controller';
+import { BusModule } from './bus/bus.module';
+import { BusController } from './bus/bus.controller';
+import { BusService } from './bus/bus.service';
+import { BusesModule } from 'src/buses/buses.module';
 @Module({
-  controllers: [OnboardController, OrganizationController, DriverController, SupervisorController],
+  controllers: [OnboardController, OrganizationController, DriverController, SupervisorController, BusController],
   imports: [
     UsersModule,
     OrganizationsModule,
@@ -33,12 +37,15 @@ import { SupervisorController } from './supervisor/supervisor.controller';
     ]),
     OrganizationModule,
     OnboardModule,
+    BusModule,
+    BusesModule,
   ],
   providers: [
     OnboardService,
     OrganizationService,
     DriverService,
     SupervisorService,
+    BusService,
     OrganizerGuard,
     {
       provide: 'MODULE_GUARD',
@@ -48,4 +55,4 @@ import { SupervisorController } from './supervisor/supervisor.controller';
   ],
   exports: [OnboardService, OrganizationService],
 })
-export class OrganizerModule {}
+export class OrganizerModule { }

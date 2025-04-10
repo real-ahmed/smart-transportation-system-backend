@@ -22,6 +22,7 @@ export class Organization {
 
   @Prop({ type: Types.ObjectId, ref: 'Organizer', required: true })
   owner: Organizer;
+    private _id: any;
 }
 
 export const OrganizationSchema = SchemaFactory.createForClass(Organization);

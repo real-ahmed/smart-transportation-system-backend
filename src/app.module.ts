@@ -14,6 +14,7 @@ import { MONGOOSE_CONFIG } from './config/database.config';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { AddressesModule } from './addresses/addresses.module';
+import { BusesModule } from './buses/buses.module';
 import * as path from 'path';
 
 @Module({
@@ -36,6 +37,7 @@ import * as path from 'path';
     UsersModule,
     OrganizationsModule,
     AddressesModule,
+    BusesModule,
   ],
   providers: [
     {
