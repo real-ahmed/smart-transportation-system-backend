@@ -15,6 +15,7 @@ import { OrganizationsModule } from './organizations/organizations.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { AddressesModule } from './addresses/addresses.module';
 import { BusesModule } from './buses/buses.module';
+import { TripsModule } from './trips/trips.module';
 import * as path from 'path';
 
 @Module({
@@ -38,6 +39,7 @@ import * as path from 'path';
     OrganizationsModule,
     AddressesModule,
     BusesModule,
+    TripsModule,
   ],
   providers: [
     {

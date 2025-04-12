@@ -86,7 +86,7 @@ export class DriverController extends BaseOrganizerController {
     @Body() updateDriverDto: DriverDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    // return this.driverService.update(request, id, updateDriverDto, file);
+    return this.driverService.update(request, id, updateDriverDto, file);
   }
 
   @Delete(':id')

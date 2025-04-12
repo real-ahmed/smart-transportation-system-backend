@@ -29,6 +29,13 @@ import { MemberModule } from './member/member.module';
 import { MemberController } from './member/member.controller';
 import { MemberService } from './member/member.service';
 import { OrganizationAccessGuard } from './common/guards/organization-access.guard';
+import { StudentModule } from './student/student.module';
+import { StudentController } from './student/student.controller';
+import { StudentService } from './student/student.service';
+import { TripModule } from './trip/trip.module';
+import { TripController } from './trip/trip.controller';
+import { TripService } from './trip/trip.service';
+import { TripsModule } from 'src/trips/trips.module';
 @Module({
   controllers: [
     OnboardController,
@@ -37,7 +44,9 @@ import { OrganizationAccessGuard } from './common/guards/organization-access.gua
     SupervisorController,
     BusController,
     MaintenanceController,
-    MemberController
+    MemberController,
+    StudentController,
+    TripController,
   ],
   imports: [
     UsersModule,
@@ -58,6 +67,9 @@ import { OrganizationAccessGuard } from './common/guards/organization-access.gua
     MaintenanceModule,
     MaintenancesModule,
     MemberModule,
+    StudentModule,
+    TripModule,
+    TripsModule,
   ],
   providers: [
     OnboardService,
@@ -69,6 +81,8 @@ import { OrganizationAccessGuard } from './common/guards/organization-access.gua
     OrganizationAccessGuard,
     MaintenanceService,
     MemberService,
+    StudentService,
+    TripService,
     {
       provide: 'MODULE_GUARD',
       useFactory: (guard: OrganizerGuard) => guard,
