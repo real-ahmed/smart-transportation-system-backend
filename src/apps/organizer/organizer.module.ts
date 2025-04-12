@@ -28,6 +28,7 @@ import { MaintenanceService } from './bus/maintenance/maintenance.service';
 import { MemberModule } from './member/member.module';
 import { MemberController } from './member/member.controller';
 import { MemberService } from './member/member.service';
+import { OrganizationAccessGuard } from './common/guards/organization-access.guard';
 @Module({
   controllers: [
     OnboardController,
@@ -65,6 +66,7 @@ import { MemberService } from './member/member.service';
     SupervisorService,
     BusService,
     OrganizerGuard,
+    OrganizationAccessGuard,
     MaintenanceService,
     MemberService,
     {
