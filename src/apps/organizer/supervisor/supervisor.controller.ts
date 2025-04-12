@@ -49,10 +49,11 @@ export class SupervisorController extends BaseOrganizerController {
   })
   async findAll(
     @Req() request: Request,
+    @Query('organizationId') organizationId: string,
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
   ) {
-    return this.supervisorService.findAll(request, Number(page), Number(limit));
+    return this.supervisorService.findAll(request, Number(page), Number(limit), organizationId);
   }
   @Get(':id')
   @ApiOperation({ summary: 'Get a supervisor by ID' })

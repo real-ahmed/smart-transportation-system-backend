@@ -41,6 +41,9 @@ export class DriverController extends BaseOrganizerController {
     return this.driverService.create(request, createDriverDto, file);
   }
 
+
+
+
   @Get()
   @ApiOperation({ summary: 'Get all drivers' })
   @ApiResponse({
@@ -49,11 +52,16 @@ export class DriverController extends BaseOrganizerController {
   })
   async findAll(
     @Req() request: Request,
+    @Query('organizationId') organizationId: string,
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
   ) {
-    return this.driverService.findAll(request, Number(page), Number(limit));
+    return this.driverService.findAll(request, Number(page), Number(limit), organizationId);
   }
+
+
+
+
   @Get(':id')
   @ApiOperation({ summary: 'Get a driver by ID' })
   @ApiResponse({ status: 200, description: 'Driver retrieved successfully.' })
@@ -62,6 +70,11 @@ export class DriverController extends BaseOrganizerController {
     return this.driverService.findOne(request, id);
   }
 
+
+
+
+
+  
   @Put(':id')
   @ApiOperation({ summary: 'Update a driver' })
   @ApiResponse({ status: 200, description: 'Driver updated successfully.' })

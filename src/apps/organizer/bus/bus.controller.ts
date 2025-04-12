@@ -20,16 +20,18 @@ export class BusController extends BaseOrganizerController {
         return this.busService.create(request, createBusDto);
     }
 
+
+
     @Get()
     @ApiOperation({ summary: 'Get all buses' })
     @ApiResponse({ status: 200, description: 'The buses have been successfully retrieved.' })
     async findAll(
         @Req() request: Request,
-        @Query('organization') organization: string,
+        @Query('organizationId') organizationId: string,
         @Query('page') page: number = 1,
         @Query('limit') limit: number = 10,
     ) {
-        return this.busService.findAll(request, organization, Number(page), Number(limit));
+        return this.busService.findAll(request, organizationId, Number(page), Number(limit));
     }
 
     @Get(':id')

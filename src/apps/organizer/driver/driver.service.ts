@@ -19,12 +19,13 @@ export class DriverService {
     return this.driversService.create(createDriverDto);
   }
 
-  async findAll(request: Request, page: number = 1, limit: number = 10) {
+  async findAll(request: Request, page: number = 1, limit: number = 10, organizationId: string) {
     const user = request['user'];
     const employees = await this.driversService.employeesService.findByOrganizationOwner(user.id);
     const employeeIds = employees.map(employee => employee._id);
     return this.driversService.findAll(page, limit, {
-      employee: { $in: employeeIds }
+      employee: { $in: employeeIds },
+      organization: organizationId
     });
   }
 

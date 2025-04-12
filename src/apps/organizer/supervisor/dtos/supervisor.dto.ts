@@ -65,5 +65,5 @@ export class SupervisorDto {
   })
   @IsMongoId()
   @IsNotEmpty()
-  organization: string; 
+  organizationId: string;
 }

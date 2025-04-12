@@ -52,6 +52,6 @@ export class BusDto {
     @ApiProperty({ type: String, required: false })
     @IsOptional()
     @IsMongoId()
-    organization: string;
+    organizationId: string;
 
 }

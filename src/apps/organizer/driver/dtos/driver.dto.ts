@@ -81,5 +81,5 @@ export class DriverDto {
   })
   @IsMongoId()
   @IsNotEmpty()
-  organization: string; 
+  organizationId: string;
 }

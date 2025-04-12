@@ -25,6 +25,9 @@ import { MaintenanceController } from './bus/maintenance/maintenance.controller'
 import { MaintenanceModule } from './bus/maintenance/maintenance.module';
 import { MaintenancesModule } from 'src/buses/maintenances/maintenances.module';
 import { MaintenanceService } from './bus/maintenance/maintenance.service';
+import { MemberModule } from './member/member.module';
+import { MemberController } from './member/member.controller';
+import { MemberService } from './member/member.service';
 @Module({
   controllers: [
     OnboardController,
@@ -32,7 +35,8 @@ import { MaintenanceService } from './bus/maintenance/maintenance.service';
     DriverController,
     SupervisorController,
     BusController,
-    MaintenanceController
+    MaintenanceController,
+    MemberController
   ],
   imports: [
     UsersModule,
@@ -52,6 +56,7 @@ import { MaintenanceService } from './bus/maintenance/maintenance.service';
     BusesModule,
     MaintenanceModule,
     MaintenancesModule,
+    MemberModule,
   ],
   providers: [
     OnboardService,
@@ -61,6 +66,7 @@ import { MaintenanceService } from './bus/maintenance/maintenance.service';
     BusService,
     OrganizerGuard,
     MaintenanceService,
+    MemberService,
     {
       provide: 'MODULE_GUARD',
       useFactory: (guard: OrganizerGuard) => guard,

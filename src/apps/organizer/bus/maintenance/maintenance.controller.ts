@@ -21,10 +21,11 @@ export class MaintenanceController {
     @ApiResponse({ status: 200, description: 'The maintenance records have been successfully retrieved.' })
     async findAll(
         @Req() request: Request,
+        @Query('organizationId') organizationId: string,
         @Query('page') page: number = 1,
         @Query('limit') limit: number = 10,
     ) {
-        return this.maintenanceService.findAll(request, Number(page), Number(limit));
+        return this.maintenanceService.findAll(request, Number(page), Number(limit), organizationId);
     }
 
     @Get(':id')

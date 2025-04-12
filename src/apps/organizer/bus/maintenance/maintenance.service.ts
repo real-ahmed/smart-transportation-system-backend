@@ -16,8 +16,8 @@ export class MaintenanceService {
         return this.maintenancesService.create(maintenance);
     }
 
-    async findAll(request: Request, page: number = 1, limit: number = 10, filter: any = {}) {
-        return this.maintenancesService.findAll(page, limit, filter);
+    async findAll(request: Request, page: number = 1, limit: number = 10, organizationId: string) {
+        return this.maintenancesService.findAll(page, limit);
     }
 
     async findById(id: string) {
