@@ -11,6 +11,9 @@ import { Member } from '../schemas/member.schema';
 
 @Injectable()
 export class MembersService {
+  findAllByIds(userIds: string[]) {
+    return this.memberModel.find({ user: { $in: userIds } });
+  }
   constructor(
     @InjectModel(Member.name) private memberModel: Model<Member>,
     private readonly usersService: UsersService,

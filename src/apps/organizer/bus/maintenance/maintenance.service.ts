@@ -12,7 +12,7 @@ export class MaintenanceService {
     }
     constructor(private readonly maintenancesService: MaintenancesService) { }
 
-    async create(maintenance: MaintenanceDto, createMaintenanceDto: MaintenanceDto) {
+    async create(maintenance: MaintenanceDto) {
         return this.maintenancesService.create(maintenance);
     }
 

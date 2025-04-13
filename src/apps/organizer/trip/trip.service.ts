@@ -27,6 +27,4 @@ export class TripService {
     async delete(id: string): Promise<Trip | null> {
         return this.tripsService.delete(id);
     }
-
-
 }

@@ -16,6 +16,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { AddressesModule } from './addresses/addresses.module';
 import { BusesModule } from './buses/buses.module';
 import { TripsModule } from './trips/trips.module';
+import { NotificationsModule } from './notifications/notifications.module';
 import * as path from 'path';
 
 @Module({
@@ -40,6 +41,7 @@ import * as path from 'path';
     AddressesModule,
     BusesModule,
     TripsModule,
+    NotificationsModule,
   ],
   providers: [
     {
@@ -49,4 +51,4 @@ import * as path from 'path';
   ],
   controllers: [],
 })
-export class AppModule {}
+export class AppModule { }

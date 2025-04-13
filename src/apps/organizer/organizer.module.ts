@@ -36,6 +36,12 @@ import { TripModule } from './trip/trip.module';
 import { TripController } from './trip/trip.controller';
 import { TripService } from './trip/trip.service';
 import { TripsModule } from 'src/trips/trips.module';
+
+import { NotificationsModule } from 'src/notifications/notifications.module';
+import { NotificationModule } from './notification/notification.module';
+import { NotificationController } from './notification/notification.controller';
+import { NotificationService } from './notification/notification.service';
+
 @Module({
   controllers: [
     OnboardController,
@@ -47,6 +53,7 @@ import { TripsModule } from 'src/trips/trips.module';
     MemberController,
     StudentController,
     TripController,
+    NotificationController,
   ],
   imports: [
     UsersModule,
@@ -70,6 +77,8 @@ import { TripsModule } from 'src/trips/trips.module';
     StudentModule,
     TripModule,
     TripsModule,
+    NotificationsModule,
+    NotificationModule,
   ],
   providers: [
     OnboardService,
@@ -83,6 +92,8 @@ import { TripsModule } from 'src/trips/trips.module';
     MemberService,
     StudentService,
     TripService,
+    NotificationService,
+
     {
       provide: 'MODULE_GUARD',
       useFactory: (guard: OrganizerGuard) => guard,

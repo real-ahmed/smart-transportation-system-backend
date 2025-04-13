@@ -12,8 +12,8 @@ export class MaintenanceController {
     @ApiOperation({ summary: 'Create a maintenance record' })
     @ApiResponse({ status: 201, description: 'The maintenance record has been successfully created.' })
     @ApiResponse({ status: 400, description: 'Bad Request.' })
-    async create(@Req() request: Request, @Body() createMaintenanceDto: MaintenanceDto) {
-        return this.maintenanceService.create(request, createMaintenanceDto);
+    async create(@Body() createMaintenanceDto: MaintenanceDto) {
+        return this.maintenanceService.create(createMaintenanceDto);
     }
 
     @Get()
