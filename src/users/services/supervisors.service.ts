@@ -31,6 +31,14 @@ export class SupervisorsService {
     return supervisor;
   }
 
+  async findByUser(userId: string): Promise<Supervisor> {
+    const supervisor = await this.model.findOne({ 'employee': userId }).exec();
+    if (!supervisor) {
+      throw new NotFoundException(`Supervisor with user ID ${userId} not found`);
+    }
+    return supervisor;
+  }
+
   async update(id: string, updateDto: any): Promise<Supervisor> {
     const updatedSupervisor = await this.model
       .findByIdAndUpdate(id, updateDto, {

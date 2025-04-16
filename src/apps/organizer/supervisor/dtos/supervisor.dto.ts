@@ -25,7 +25,7 @@ export class SupervisorDto {
   @Type(() => String)
   image: any;
 
-  @ApiProperty({ example: 'Driver', type: String })
+  @ApiProperty({ example: 'Supervisor', type: String })
   @IsString()
   @MinLength(2)
   @MaxLength(50)
@@ -37,7 +37,7 @@ export class SupervisorDto {
   @MaxLength(50)
   lastName: string;
 
-  @ApiProperty({ example: 'driver@example.com', type: String })
+  @ApiProperty({ example: 'supervisor@example.com', type: String })
   @IsNotEmpty()
   @IsEmail()
   @Transform(({ value }) => value.toLowerCase())
@@ -45,10 +45,10 @@ export class SupervisorDto {
 
   @ApiProperty({ example: '+20123456789', type: String })
   @IsNotEmpty()
-  @IsPhoneNumber(undefined)
+
   phoneNumber: string;
 
-  @ApiProperty({ example: 'Driver@123', type: String })
+  @ApiProperty({ example: 'Supervisor@123', type: String })
   @IsNotEmpty()
   @IsString()
   @MinLength(8)
@@ -65,5 +65,5 @@ export class SupervisorDto {
   })
   @IsMongoId()
   @IsNotEmpty()
-  organizationId: string;
+  organization: string;
 }
