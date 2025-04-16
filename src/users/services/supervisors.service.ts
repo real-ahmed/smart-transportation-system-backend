@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { getPaginatedResults, paginate } from 'src/common/helpers/pagination.helper';
 import { Supervisor } from '../schemas/supervisor.schema';
@@ -31,12 +31,9 @@ export class SupervisorsService {
     return supervisor;
   }
 
-  async findByUser(userId: string): Promise<Supervisor> {
-    const supervisor = await this.model.findOne({ 'employee': userId }).exec();
-    if (!supervisor) {
-      throw new NotFoundException(`Supervisor with user ID ${userId} not found`);
-    }
-    return supervisor;
+  async findByUser(userId: string): Promise<Supervisor[]> {
+    const supervisors = await this.model.find({ employee: new Types.ObjectId(userId) }).exec();
+    return supervisors;
   }
 
   async update(id: string, updateDto: any): Promise<Supervisor> {

@@ -15,24 +15,15 @@ export class SupervisorGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
 
-    // Check if user exists in the request
-    if (!request['user']) {
-      throw new UnauthorizedException('User is not authenticated');
-    }
+    try {
+      const supervisor = await this.supervisorService.findByUser(
+        request['user']['_id'],
+      );
 
-    const userId = request['user']['_id'];
-    if (!userId) {
-      throw new UnauthorizedException('Invalid user ID');
-    }
-
-    const supervisor = await this.supervisorService.findByUser(userId);
-
-    if (!supervisor) {
+      request['user']['supervisor'] = supervisor;
+      return true;
+    } catch (error) {
       throw new UnauthorizedException('User is not a supervisor');
     }
-
-    request['user']['supervisor'] = supervisor;
-
-    return true;
   }
 }
