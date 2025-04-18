@@ -28,8 +28,8 @@ export class OrganizationService {
       type: organizationDto.type,
       image: organizationDto.image,
       description: organizationDto.description,
-      addressId: address._id,
-      ownerId: request['user']['id'],
+      addressId: address,
+      ownerId: request['user'],
     });
 
     return organization;

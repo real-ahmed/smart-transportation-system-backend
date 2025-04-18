@@ -32,7 +32,6 @@ export class OnboardService {
       phoneNumber: onboardDto.phoneNumber,
       postalCode: onboardDto.postalCode,
     });
-    onboardDto['owner'] = request['user']['_id'];
     return this.organizationsService.create(request, address, onboardDto, file);
   }
 }
