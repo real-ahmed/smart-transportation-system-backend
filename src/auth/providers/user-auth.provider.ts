@@ -27,4 +27,8 @@ export class UserAuthProvider extends BaseAuthProvider {
     signUpDto.image = imageUrl;
     return this.usersService.create(signUpDto);
   }
+
+  getAccountType(_id: any): any {
+    return this.usersService.getAccountType(_id);
+  }
 }

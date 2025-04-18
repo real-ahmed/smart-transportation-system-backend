@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Organizer } from '../schemas/organizer.schema';
 import { InjectModel } from '@nestjs/mongoose';
@@ -8,17 +8,17 @@ import { getPaginatedResults } from 'src/common/helpers/pagination.helper';
 // import { UpdateOrganizerDto } from './dto/update-organizer.dto';
 import { Member } from '../schemas/member.schema';
 
-
 @Injectable()
 export class MembersService {
+  constructor(
+    @InjectModel(Member.name) private memberModel: Model<Member>,
+    @Inject(forwardRef(() => UsersService))
+    private readonly usersService: UsersService,
+  ) {}
+
   findAllByIds(userIds: string[]) {
     return this.memberModel.find({ user: { $in: userIds } });
   }
-  constructor(
-    @InjectModel(Member.name) private memberModel: Model<Member>,
-    private readonly usersService: UsersService,
-  ) { }
-
   // Create new organizer
   async create(userId: string): Promise<Member | null> {
     if (!userId) {
@@ -86,26 +86,38 @@ export class MembersService {
     }
   }
 
-  async subscribeToOrganization(memberId: string, organizationId: string): Promise<Member> {
+  async subscribeToOrganization(
+    memberId: string,
+    organizationId: string,
+  ): Promise<Member> {
     const member = await this.findOne(memberId);
     if (!member) {
       throw new NotFoundException(`Member with id ${memberId} not found`);
     }
     // Assuming member has a field 'organizations' which is an array of organization IDs
-    if (!member.organizations.includes(new mongoose.Types.ObjectId(organizationId))) {
+    if (
+      !member.organizations.includes(
+        new mongoose.Types.ObjectId(organizationId),
+      )
+    ) {
       member.organizations.push(new mongoose.Types.ObjectId(organizationId));
       await this.memberModel.findByIdAndUpdate(memberId, member).exec();
     }
     return member;
   }
 
-  async unsubscribeFromOrganization(memberId: string, organizationId: string): Promise<Member> {
+  async unsubscribeFromOrganization(
+    memberId: string,
+    organizationId: string,
+  ): Promise<Member> {
     const member = await this.findOne(memberId);
     if (!member) {
       throw new NotFoundException(`Member with id ${memberId} not found`);
     }
     // Assuming member has a field 'organizations' which is an array of organization IDs
-    const index = member.organizations.indexOf(new mongoose.Types.ObjectId(organizationId));
+    const index = member.organizations.indexOf(
+      new mongoose.Types.ObjectId(organizationId),
+    );
     if (index > -1) {
       member.organizations.splice(index, 1);
       await this.memberModel.findByIdAndUpdate(memberId, member).exec();

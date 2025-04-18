@@ -31,7 +31,7 @@ export class AuthService {
     identifier: string,
     password: string,
     organization?: string,
-  ): Promise<{ access_token: string }> {
+  ): Promise<{ access_token: string; account_type: string }> {
     try {
       const authProvider = organization
         ? this.employeeAuthProvider
@@ -47,6 +47,8 @@ export class AuthService {
         throw new Error('INVALID_PASSWORD');
       }
 
+      let accountType = await authProvider.getAccountType(account);
+
       return {
         access_token: await this.jwtService.signAsync({
           _id: account['_id'],
@@ -56,6 +58,7 @@ export class AuthService {
           phone: account['phoneNumber'],
           status: account['status'],
         }),
+        account_type: accountType,
       };
     } catch (error) {
       if (error.message in this.ERROR_MESSAGES) {

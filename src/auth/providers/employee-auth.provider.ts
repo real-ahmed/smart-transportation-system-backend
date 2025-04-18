@@ -26,4 +26,8 @@ export class EmployeeAuthProvider extends BaseAuthProvider {
   async createAccount(signUpDto: Record<string, any>): Promise<BaseUser> {
     return this.employeesService.create(signUpDto);
   }
+
+  async getAccountType(account: BaseUser): Promise<string> {
+    return 'employee'; // Implement employee-specific account type retrieval if needed
+  }
 }

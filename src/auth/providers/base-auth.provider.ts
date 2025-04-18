@@ -13,4 +13,6 @@ export abstract class BaseAuthProvider implements IAuthProvider {
     signUpDto: Record<string, any>,
     file: Express.Multer.File,
   ): Promise<BaseUser>;
+
+  abstract getAccountType(account: BaseUser): Promise<string>;
 }

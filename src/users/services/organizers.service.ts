@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Organizer } from '../schemas/organizer.schema';
 import { InjectModel } from '@nestjs/mongoose';
@@ -11,7 +11,8 @@ import { getPaginatedResults } from 'src/common/helpers/pagination.helper';
 export class OrganizersService {
   constructor(
     @InjectModel(Organizer.name) private organizerModel: Model<Organizer>,
-    private readonly usersService: UsersService,
+        @Inject(forwardRef(() => UsersService))
+        private readonly usersService: UsersService,
   ) {}
 
   // Create new organizer

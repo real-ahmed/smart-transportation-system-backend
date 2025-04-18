@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Req } from '@nestjs/common';
 import { BaseSupervisorController } from '../base-supervisor.controller';
 import { TripService } from './trip.service';
 
@@ -8,8 +8,16 @@ export class TripController extends BaseSupervisorController {
         super();
     }
 
-    @Get()
-    async getTrips() {
-        // return this.tripService.findAll();
+    @Get("nextTrip")
+    async getTrips(
+        @Req() request: Request
+    ) {
+        return this.tripService.findNextTrip(request);
+    }
+
+
+    @Get('tripStudents')
+    async tripStudents(@Req() request) {
+        return this.tripStudents(request);
     }
 }

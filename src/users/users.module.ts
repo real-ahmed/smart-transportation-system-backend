@@ -46,4 +46,4 @@ import { Student, StudentSchema } from './schemas/student.schema';
     StudentsService,
   ],
 })
-export class UsersModule { }
+export class UsersModule {}
