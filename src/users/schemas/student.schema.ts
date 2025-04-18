@@ -8,7 +8,6 @@ export type StudentDocument = Student & Document;
 export class Student {
   _id: any;
 
-
   @Prop({ required: true })
   image: string;
 
@@ -21,16 +20,14 @@ export class Student {
   @Prop({ type: String, required: true })
   ssn: string;
 
-
-  @Prop({ type: Types.ObjectId, ref: 'Member', required: true })
+  @Prop({ type: Types.ObjectId, ref: 'Member', required: false })
   guardian: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, ref: 'Organization', required: true })
   organization: Types.ObjectId;
 
-  @Prop({ type: [Types.ObjectId], ref: 'Member', default: [] })
+  @Prop({ type: [Types.ObjectId], ref: 'Member', default: [], required: false })
   followers: Types.ObjectId[];
-
 }
 
 export const StudentSchema = SchemaFactory.createForClass(Student);

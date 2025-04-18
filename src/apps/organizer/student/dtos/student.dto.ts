@@ -15,6 +15,7 @@ import {
   IsArray,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
+import { Optional } from '@nestjs/common';
 
 export class StudentDto {
   @ApiProperty({
@@ -32,33 +33,43 @@ export class StudentDto {
   @MaxLength(50)
   name: string;
 
-  @ApiProperty({ example: ['Disability 1', 'Disability 2'], type: [String] })
+  @ApiProperty({
+    example: ['Disability 1', 'Disability 2'],
+    type: [String],
+    required: false,
+  })
   @IsArray()
   @IsString({ each: true })
+  @IsOptional()
   disabilities: string[];
 
   @ApiProperty({ example: '1234567890', type: String })
   @IsString()
-  @MinLength(10)
-  @MaxLength(10)
+  @MinLength(14)
+  @MaxLength(14)
   ssn: string;
 
   @ApiProperty({ example: '67d41007e56dd095270d2ee8', type: String })
   @IsMongoId()
   @IsNotEmpty()
-  organizationId: string;
+  organization: string;
 
-
-  @ApiProperty({ example: '67d41007e56dd095270d2ee8', type: String })
+  @ApiProperty({
+    example: '67d41007e56dd095270d2ee8',
+    type: String,
+    required: false,
+  })
   @IsMongoId()
-  @IsNotEmpty()
+  @IsOptional()
   guardianId: string;
 
-  @ApiProperty({ example: ['67d41007e56dd095270d2ee8', '67d41007e56dd095270d2ee8'], type: [String] })
+  @ApiProperty({
+    example: ['67d41007e56dd095270d2ee8', '67d41007e56dd095270d2ee8'],
+    type: [String],
+    required: false,
+  })
   @IsArray()
   @IsMongoId({ each: true })
-  @IsNotEmpty()
+  @IsOptional()
   followers: string[];
-
-
 }
