@@ -29,7 +29,7 @@ export class OrganizationService {
       image: organizationDto.image,
       description: organizationDto.description,
       addressId: address._id,
-      ownerId: request['user']['organizer'],
+      ownerId: request['user']['id'],
     });
 
     return organization;
