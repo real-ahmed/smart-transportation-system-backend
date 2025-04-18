@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { Address } from 'src/addresses/address.schema';
 import { Organizer } from 'src/users/schemas/organizer.schema';
+import { User } from 'src/users/schemas/user.schema';
 
 export type OrganizationDocument = Organization & Document;
 
@@ -20,9 +21,9 @@ export class Organization {
   @Prop({ type: Types.ObjectId, ref: 'Address', required: true })
   address: Address;
 
-  @Prop({ type: Types.ObjectId, ref: 'Organizer', required: true })
-  owner: Organizer;
-    private _id: any;
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  owner: User;
+  private _id: any;
 }
 
 export const OrganizationSchema = SchemaFactory.createForClass(Organization);
