@@ -14,25 +14,20 @@ export class OrganizationService {
 
   async create(
     request: Request,
-    address: Address,
-    organizationDto: any,
+    address: any,
+    onboardDto: any,
     file: Express.Multer.File,
   ) {
     // Upload image and get the URL
     const imageUrl = await uploadFile(file, 'organizer');
-    organizationDto.image = imageUrl;
+    const organizationDto = {
+      ...onboardDto,
+      owner: request['user']['_id'], // include the owner id
+      address: address._id, // include the created address id
+      image: imageUrl,
+    };
 
-    // Create organization with the addressId
-    const organization = await this.organizationsService.create({
-      name: organizationDto.name,
-      type: organizationDto.type,
-      image: organizationDto.image,
-      description: organizationDto.description,
-      addressId: address,
-      ownerId: request['user'],
-    });
-
-    return organization;
+    return this.organizationsService.create(organizationDto);
   }
 
   async findAll(request: Request, page: number = 1, limit: number = 10) {
