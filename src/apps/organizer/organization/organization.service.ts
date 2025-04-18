@@ -20,13 +20,26 @@ export class OrganizationService {
   ) {
     // Upload image and get the URL
     const imageUrl = await uploadFile(file, 'organizer');
+
+    // Ensure you use the correct property from user
+    const ownerId = request['user']['_id'] || request['user']['id'];
+    if (!ownerId) {
+      throw new Error('User id is missing from request.');
+    }
+
+    // Ensure address has _id
+    if (!address || !address._id) {
+      throw new Error('Address creation failed or returned invalid data.');
+    }
+
     const organizationDto = {
       ...onboardDto,
-      owner: request['user']['_id'], // include the owner id
+      owner: ownerId, // include the owner id
       address: address._id, // include the created address id
       image: imageUrl,
     };
 
+    console.log('Creating organization with DTO:', organizationDto);
     return this.organizationsService.create(organizationDto);
   }
 
