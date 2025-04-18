@@ -36,26 +36,21 @@ export class OrganizationService {
   }
 
   async findAll(request: Request, page: number = 1, limit: number = 10) {
-    const organizer = request['user']['organizer'];
-    if (!organizer) {
-      return []; // Or throw an exception if an organizer is expected to exist
-    }
-
     return this.organizationsService.findAll(page, limit, {
-      owner: organizer._id,
+      owner: request['user']['id'],
     });
   }
 
   async findOne(request: Request, id: string) {
-    const organizer = request['user']['organizer'];
-    if (!organizer) {
-      throw new NotFoundException('Organizer not found');
-    }
+    // const organizer = request['user']['organizer'];
+    // if (!organizer) {
+    //   throw new NotFoundException('Organizer not found');
+    // }
 
     // Fetch the organization by ID and ownerId
     const organization = await this.organizationsService.findOne({
       _id: id,
-      owner: organizer._id,
+      owner: request['user']['id'],
     });
 
     if (!organization) {
@@ -71,7 +66,7 @@ export class OrganizationService {
     organizationDto: OrganizationDto,
     file?: Express.Multer.File,
   ) {
-    const organizer = request['user']['organizer'];
+    const organizer = request['user'];
     if (!organizer) {
       throw new NotFoundException('Organizer not found');
     }
@@ -111,7 +106,7 @@ export class OrganizationService {
     const deletedOrganization =
       await this.organizationsService.findOneAndDelete({
         _id: id,
-        owner: organizer._id,
+        owner: request['user']['id'],
       });
 
     if (!deletedOrganization) {
