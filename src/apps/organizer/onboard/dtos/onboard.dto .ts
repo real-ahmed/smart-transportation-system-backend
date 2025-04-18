@@ -29,7 +29,7 @@ export class OnboardDto {
   @ApiProperty({
     description:
       'Phone number of the organization in international format, e.g., +2348012345678',
-    example: '01017078859',
+    example: '+201017078859',
   })
   @IsPhoneNumber()
   @IsNotEmpty()

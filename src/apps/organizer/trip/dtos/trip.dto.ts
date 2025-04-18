@@ -69,6 +69,6 @@ export class TripDto {
   })
   @IsMongoId()
   @IsNotEmpty()
-  organizationId: string;
+  organization: string;
 
 }

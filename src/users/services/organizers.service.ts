@@ -11,8 +11,8 @@ import { getPaginatedResults } from 'src/common/helpers/pagination.helper';
 export class OrganizersService {
   constructor(
     @InjectModel(Organizer.name) private organizerModel: Model<Organizer>,
-        @Inject(forwardRef(() => UsersService))
-        private readonly usersService: UsersService,
+    @Inject(forwardRef(() => UsersService))
+    private readonly usersService: UsersService,
   ) {}
 
   // Create new organizer

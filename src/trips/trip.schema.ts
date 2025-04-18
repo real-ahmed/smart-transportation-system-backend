@@ -29,5 +29,8 @@ export class Trip {
   students: Student[];
   @Prop({ type: Types.ObjectId, ref: 'Organization', required: true })
   organization: Organization;
+
+  @Prop({ required: true, default: 'waiting' })
+  status: string;
 }
 export const TripSchema = SchemaFactory.createForClass(Trip);
