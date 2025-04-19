@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { Driver } from '../schemas/driver.schema';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { getPaginatedResults } from 'src/common/helpers/pagination.helper';
 
@@ -10,7 +10,7 @@ export class DriversService {
   constructor(
     public readonly employeesService: EmployeesService,
     @InjectModel(Driver.name) protected readonly model: Model<Driver>,
-  ) { }
+  ) {}
 
   async create(createDto): Promise<Driver> {
     const employee = await this.employeesService.create(createDto);
@@ -30,6 +30,8 @@ export class DriversService {
     }
     return driver;
   }
+
+
 
   async update(id: string, updateDto: any): Promise<Driver> {
     const updatedDriver = await this.model

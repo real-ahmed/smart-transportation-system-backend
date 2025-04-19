@@ -27,6 +27,14 @@ export class EmployeesService extends BaseUsersService<Employee> {
       .exec();
   }
 
+  async findById(id: string): Promise<Employee> {
+    const employee = await this.employeeModel.findById(id).exec();
+    if (!employee) {
+      throw new Error(`Employee with ID ${id} not found`);
+    }
+    return employee;
+  }
+
   async findByOrganizationOwner(ownerId: string): Promise<Employee[]> {
     return this.employeeModel.find({ 'organization.owner': ownerId }).exec();
   }
