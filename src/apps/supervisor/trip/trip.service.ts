@@ -4,8 +4,10 @@ import { BusesService } from 'src/buses/buses.service';
 import { Trip } from 'src/trips/trip.schema';
 import { TripsService } from 'src/trips/trips.service';
 import { Employee } from 'src/users/schemas/employee.schema';
+import { Student } from 'src/users/schemas/student.schema';
 import { DriversService } from 'src/users/services/drivers.service';
 import { EmployeesService } from 'src/users/services/employees.service';
+import { StudentsService } from 'src/users/services/students.service';
 
 @Injectable()
 export class TripService {
@@ -13,6 +15,7 @@ export class TripService {
     private readonly tripsService: TripsService,
     private readonly busesService: BusesService,
     private readonly employeesService: EmployeesService,
+    private readonly studentsService: StudentsService,
   ) {}
   async findAll(): Promise<Trip[]> {
     // return this.tripsService.findAll();
@@ -22,8 +25,8 @@ export class TripService {
   async findNextTrip(request: Request) {
     let trip = await this.tripsService.findAll(-1, -1, {
       status: { $ne: 'waiting' },
-
       supervisor: request['user']['_id'],
+      date: { $gte: new Date() },
     });
     trip = trip['results'][0];
 
@@ -40,18 +43,20 @@ export class TripService {
     };
   }
 
-  async getTripStudents(request: Request) {
-    const trip = await this.tripsService.findAll(1, 1, {
-      status: { $ne: 'waiting' },
-      supervisor: { $ne: request['user']._id },
-    })[0];
-    const tripStudents = trip['students'].map((student: any) => {
-      return {
-        _id: student._id,
-        name: student.name,
-        image: student.image,
-      };
+  async getTripStudents(request: Request, tripId: string) {
+    let trip = await this.tripsService.findAll(1, 1, {
+      supervisor: request['user']['_id'],
+      _id: tripId,
     });
+    if (trip['results'].length === 0) {
+      return null;
+    }
+    trip = trip['results'][0];
+    const tripStudents = await Promise.all(
+      trip['students'].map((student: any) =>
+        this.studentsService.findOne(student),
+      ),
+    );
     return tripStudents;
   }
 }

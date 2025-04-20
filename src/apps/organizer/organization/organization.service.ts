@@ -4,6 +4,7 @@ import { OrganizationDto } from './dtos/organization.dto';
 import { uploadFile } from 'src/common/helpers/file-upload.helper';
 import { Address } from 'src/addresses/address.schema';
 import { OrganizersService } from 'src/users/services/organizers.service';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class OrganizationService {
@@ -34,7 +35,7 @@ export class OrganizationService {
 
     const organizationDto = {
       ...onboardDto,
-      owner: ownerId, // include the owner id
+      owner: new Types.ObjectId(ownerId), // include the owner id
       address: address._id, // include the created address id
       image: imageUrl,
     };

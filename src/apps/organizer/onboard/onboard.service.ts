@@ -18,6 +18,9 @@ export class OnboardService {
     onboardDto: OnboardDto,
     file: Express.Multer.File,
   ) {
+
+
+
     let organizer;
     organizer = await this.organizerService.findByUser(request['user']['_id']);
     if (organizer) {
@@ -25,6 +28,7 @@ export class OnboardService {
     }
     organizer = await this.organizerService.create(request['user']['_id']);
     request['user']['organizer'] = organizer;
+    
     const address = await this.addressesService.create({
       street: onboardDto.street,
       city: onboardDto.city,
