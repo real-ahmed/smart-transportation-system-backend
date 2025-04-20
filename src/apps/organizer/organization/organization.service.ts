@@ -60,7 +60,7 @@ export class OrganizationService {
     // Fetch the organization by ID and ownerId
     const organization = await this.organizationsService.findOne({
       _id: id,
-      owner: request['user']['id'],
+      owner: new Types.ObjectId(request['user']['_id']),
     });
 
     if (!organization) {
@@ -76,11 +76,6 @@ export class OrganizationService {
     organizationDto: OrganizationDto,
     file?: Express.Multer.File,
   ) {
-    const organizer = request['user'];
-    if (!organizer) {
-      throw new NotFoundException('Organizer not found');
-    }
-
     // Upload new image if provided
     let imageUrl: string | undefined;
     if (file) {
@@ -95,7 +90,7 @@ export class OrganizationService {
     // Update the organization only if it belongs to the organizer
     const updatedOrganization =
       await this.organizationsService.findOneAndUpdate(
-        { _id: id, owner: organizer._id },
+        { _id: id, owner: new Types.ObjectId(request['user']['_id']) },
         updateData,
         { new: true }, // Return the updated document
       );
@@ -116,7 +111,7 @@ export class OrganizationService {
     const deletedOrganization =
       await this.organizationsService.findOneAndDelete({
         _id: id,
-        owner: request['user']['id'],
+        owner: new Types.ObjectId(request['user']['_id']),
       });
 
     if (!deletedOrganization) {
