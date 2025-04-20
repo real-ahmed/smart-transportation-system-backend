@@ -45,8 +45,9 @@ export class OrganizationService {
   }
 
   async findAll(request: Request, page: number = 1, limit: number = 10) {
+    console.log(request['user']['_id']);
     return this.organizationsService.findAll(page, limit, {
-      owner: request['user']['id'],
+      owner: new Types.ObjectId(request['user']['_id']),
     });
   }
 
