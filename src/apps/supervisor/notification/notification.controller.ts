@@ -36,31 +36,15 @@ export class NotificationController extends BaseSupervisorController {
     @Query('page') page?: number,
     @Query('limit') limit?: number,
   ) {
-    const supervisorId = request['user']['_id'];
-    return this.notificationService.findAll(supervisorId);
-  }
-
-  @Get('unread-count')
-  @ApiOperation({
-    summary: 'Get count of unread notifications for current supervisor',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Returns count of unread notifications',
-  })
-  async getUnreadCount(@Req() request: Request) {
-    const supervisorId = request['user']['_id'];
-    return {
-      count: await this.notificationService.getUnreadCount(supervisorId),
-    };
+    return this.notificationService.findAll(request, page, limit);
   }
 
   @Put(':id/mark-read')
   @ApiOperation({ summary: 'Mark a specific notification as read' })
   @ApiParam({ name: 'id', description: 'Notification ID' })
   @ApiResponse({ status: 200, description: 'Notification marked as read' })
-  async markAsRead(@Param('id') id: string) {
-    return this.notificationService.markAsRead(id);
+  async markAsRead(@Req() request, @Param('id') id: string) {
+    return this.notificationService.markAsRead(request, id);
   }
 
   @Patch('read-all')
@@ -68,7 +52,7 @@ export class NotificationController extends BaseSupervisorController {
     summary: 'Mark all notifications as read for current supervisor',
   })
   @ApiResponse({ status: 200, description: 'All notifications marked as read' })
-  async markAllAsRead() {
-    return this.notificationService.markAllAsRead();
+  async markAllAsRead(@Req() request) {
+    return this.notificationService.markAllAsRead(request);
   }
 }
