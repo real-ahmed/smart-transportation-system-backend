@@ -6,6 +6,7 @@ import { UsersModule } from '../../users/users.module';
 import { AppModule } from 'src/app.module';
 import { NotificationModule } from './notification/notification.module';
 import { NotificationController } from './notification/notification.controller';
+import { ProfileModule } from './profile/profile.module';
 @Module({
   controllers: [TripController, NotificationController],
   imports: [
@@ -19,6 +20,7 @@ import { NotificationController } from './notification/notification.controller';
       },
     ]),
     NotificationModule,
+    ProfileModule,
   ],
 })
 export class SupervisorModule { }
