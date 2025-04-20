@@ -5,7 +5,7 @@ import { uploadFile } from 'src/common/helpers/file-upload.helper';
 
 @Injectable()
 export class DriverService {
-  constructor(private readonly driversService: DriversService) { }
+  constructor(private readonly driversService: DriversService) {}
 
   async create(
     request: Request,
@@ -19,13 +19,21 @@ export class DriverService {
     return this.driversService.create(createDriverDto);
   }
 
-  async findAll(request: Request, page: number = 1, limit: number = 10, organizationId: string) {
+  async findAll(
+    request: Request,
+    page: number = 1,
+    limit: number = 10,
+    organizationId: string,
+  ) {
     const user = request['user'];
-    const employees = await this.driversService.employeesService.findByOrganizationOwner(user.id);
-    const employeeIds = employees.map(employee => employee._id);
+    const employees =
+      await this.driversService.employeesService.findByOrganizationOwner(
+        user['_id'],
+      );
+    const employeeIds = employees.map((employee) => employee._id);
     return this.driversService.findAll(page, limit, {
       employee: { $in: employeeIds },
-      organization: organizationId
+      organization: organizationId,
     });
   }
 

@@ -4,7 +4,7 @@ import { SupervisorsService } from 'src/users/services/supervisors.service';
 
 @Injectable()
 export class SupervisorService {
-  constructor(private readonly supervisorsService: SupervisorsService) { }
+  constructor(private readonly supervisorsService: SupervisorsService) {}
 
   async create(
     request: Request,
@@ -18,13 +18,21 @@ export class SupervisorService {
     return this.supervisorsService.create(createSupervisorDto);
   }
 
-  async findAll(request: Request, page: number = 1, limit: number = 10, organizationId: string) {
+  async findAll(
+    request: Request,
+    page: number = 1,
+    limit: number = 10,
+    organizationId: string,
+  ) {
     const user = request['user'];
-    const employees = await this.supervisorsService.employeesService.findByOrganizationOwner(user.id);
-    const employeeIds = employees.map(employee => employee._id);
+    const employees =
+      await this.supervisorsService.employeesService.findByOrganizationOwner(
+        user['_id'],
+      );
+    const employeeIds = employees.map((employee) => employee._id);
     return this.supervisorsService.findAll(page, limit, {
       employee: { $in: employeeIds },
-      organization: organizationId
+      organization: organizationId,
     });
   }
 
