@@ -30,6 +30,10 @@ export class TripService {
     });
     trip = trip['results'][0];
 
+    if (!trip) {
+      return { message: 'No upcoming trip found' };
+    }
+
     return {
       _id: trip['_id'],
       bus: await this.busesService.findById(trip['bus']),
