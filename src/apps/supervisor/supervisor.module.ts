@@ -4,9 +4,10 @@ import { TripModule } from './trip/trip.module';
 import { RouterModule } from '@nestjs/core';
 import { UsersModule } from '../../users/users.module';
 import { AppModule } from 'src/app.module';
-
+import { NotificationModule } from './notification/notification.module';
+import { NotificationController } from './notification/notification.controller';
 @Module({
-  controllers: [TripController],
+  controllers: [TripController, NotificationController],
   imports: [
     forwardRef(() => AppModule),
     TripModule,
@@ -17,6 +18,7 @@ import { AppModule } from 'src/app.module';
         module: SupervisorModule,
       },
     ]),
+    NotificationModule,
   ],
 })
 export class SupervisorModule { }

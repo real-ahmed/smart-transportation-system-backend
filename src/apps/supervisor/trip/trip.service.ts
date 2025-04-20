@@ -24,7 +24,7 @@ export class TripService {
 
   async findNextTrip(request: Request) {
     let trip = await this.tripsService.findAll(-1, -1, {
-      status: { $ne: 'waiting' },
+      status: 'waiting',
       supervisor: request['user']['_id'],
       date: { $gte: new Date() },
     });
