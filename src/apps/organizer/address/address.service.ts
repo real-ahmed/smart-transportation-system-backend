@@ -3,6 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { Types } from 'mongoose';
 import { AddressesService } from 'src/addresses/addresses.service';
 import { CreateAddressDto } from 'src/addresses/dtos/create-address.dto';
 import { UpdateAddressDto } from 'src/addresses/dtos/update-address.dto';
@@ -45,13 +46,15 @@ export class AddressService {
     return address;
   }
 
-  async findAll(request :Request) {
-    return this.addressesService.findAll({owner: request['user']['_id']});
+  async findAll(request: Request) {
+    return this.addressesService.findAll({
+      owner: new Types.ObjectId(request['user']['_id']),
+    });
   }
 
-  async create(request: Request, dto: CreateAddressDto) {
+  async create(request: Request, dto) {
     const owner = request['user']['_id'];
-    dto['owner'] = owner;
+    dto['owner'] = new Types.ObjectId(owner);
     return this.addressesService.create({ ...dto });
   }
 }

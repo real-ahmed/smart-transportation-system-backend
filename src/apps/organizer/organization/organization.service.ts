@@ -36,7 +36,7 @@ export class OrganizationService {
     const organizationDto = {
       ...onboardDto,
       owner: new Types.ObjectId(ownerId), // include the owner id
-      address: address._id, // include the created address id
+      address: new Types.ObjectId(address._id), // include the created address id
       image: imageUrl,
     };
 

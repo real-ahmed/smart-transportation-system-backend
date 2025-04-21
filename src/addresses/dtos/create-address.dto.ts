@@ -22,5 +22,5 @@ export class CreateAddressDto {
   postalCode: string;
 
   @IsString()
-  owner: string;
+  owner: Object;
 }

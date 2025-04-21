@@ -42,6 +42,7 @@ import { NotificationModule } from './notification/notification.module';
 import { NotificationController } from './notification/notification.controller';
 import { NotificationService } from './notification/notification.service';
 import { AddressModule } from './address/address.module';
+import { AddressController } from './address/address.controller';
 
 @Module({
   controllers: [
@@ -55,6 +56,7 @@ import { AddressModule } from './address/address.module';
     StudentController,
     TripController,
     NotificationController,
+    AddressController
   ],
   imports: [
     UsersModule,

@@ -7,5 +7,6 @@ import { AddressesModule } from 'src/addresses/addresses.module';
   providers: [AddressService],
   controllers: [AddressController],
   imports: [AddressesModule],
+  exports: [AddressService],
 })
 export class AddressModule {}
