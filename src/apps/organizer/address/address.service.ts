@@ -45,8 +45,8 @@ export class AddressService {
     return address;
   }
 
-  async findAll() {
-    return this.addressesService.findAll();
+  async findAll(request :Request) {
+    return this.addressesService.findAll({owner: request['user']['_id']});
   }
 
   async create(request: Request, dto: CreateAddressDto) {
