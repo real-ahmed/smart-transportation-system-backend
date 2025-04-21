@@ -41,6 +41,7 @@ import { NotificationsModule } from 'src/notifications/notifications.module';
 import { NotificationModule } from './notification/notification.module';
 import { NotificationController } from './notification/notification.controller';
 import { NotificationService } from './notification/notification.service';
+import { AddressModule } from './address/address.module';
 
 @Module({
   controllers: [
@@ -79,6 +80,7 @@ import { NotificationService } from './notification/notification.service';
     TripsModule,
     NotificationsModule,
     NotificationModule,
+    AddressModule,
   ],
   providers: [
     OnboardService,

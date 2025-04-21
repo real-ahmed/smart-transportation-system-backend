@@ -20,4 +20,7 @@ export class CreateAddressDto {
   @IsString()
   @IsNotEmpty()
   postalCode: string;
+
+  @IsString()
+  owner: string;
 }
