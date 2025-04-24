@@ -16,6 +16,7 @@ import {
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 import { Optional } from '@nestjs/common';
+import { Address } from 'src/addresses/address.schema';
 
 export class StudentDto {
   @ApiProperty({
@@ -53,6 +54,11 @@ export class StudentDto {
   @IsMongoId()
   @IsNotEmpty()
   organization: string;
+
+  @ApiProperty({ example: '67d41007e56dd095270d2ee8', type: String })
+  @IsMongoId()
+  @IsNotEmpty()
+  address: string;
 
   @ApiProperty({
     example: '67d41007e56dd095270d2ee8',

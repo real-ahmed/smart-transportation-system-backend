@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { User } from './user.schema';
+import { Address } from 'src/addresses/address.schema';
 
 export type StudentDocument = Student & Document;
 
@@ -28,6 +29,9 @@ export class Student {
 
   @Prop({ type: [Types.ObjectId], ref: 'Member', default: [], required: false })
   followers: Types.ObjectId[];
+
+  @Prop({ type: Types.ObjectId, ref: 'Address', required: true })
+  address: Address;
 }
 
 export const StudentSchema = SchemaFactory.createForClass(Student);
