@@ -7,6 +7,9 @@ import { getPaginatedResults } from 'src/common/helpers/pagination.helper';
 
 @Injectable()
 export class DriversService {
+  findByUser(arg0: any) {
+      throw new Error('Method not implemented.');
+  }
   constructor(
     public readonly employeesService: EmployeesService,
     @InjectModel(Driver.name) protected readonly model: Model<Driver>,
