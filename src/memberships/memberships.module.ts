@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { MembershipsService } from './memberships.service';
-import { MembershipRequestsService } from './membership-requests.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
   MembershipRequest,
@@ -18,7 +17,7 @@ import { UsersModule } from 'src/users/users.module';
     UsersModule,
   ],
 
-  providers: [MembershipRequestsService, MembershipsService],
-  exports: [MembershipRequestsService, MembershipsService],
+  providers: [MembershipsService],
+  exports: [MembershipsService],
 })
 export class MembershipsModule {}

@@ -43,6 +43,7 @@ import { NotificationController } from './notification/notification.controller';
 import { NotificationService } from './notification/notification.service';
 import { AddressModule } from './address/address.module';
 import { AddressController } from './address/address.controller';
+import { MembershipsModule } from 'src/memberships/memberships.module';
 
 @Module({
   controllers: [
@@ -56,7 +57,7 @@ import { AddressController } from './address/address.controller';
     StudentController,
     TripController,
     NotificationController,
-    AddressController
+    AddressController,
   ],
   imports: [
     UsersModule,
@@ -83,6 +84,7 @@ import { AddressController } from './address/address.controller';
     NotificationsModule,
     NotificationModule,
     AddressModule,
+    MembershipsModule,
   ],
   providers: [
     OnboardService,
@@ -106,4 +108,4 @@ import { AddressController } from './address/address.controller';
   ],
   exports: [OnboardService, OrganizationService],
 })
-export class OrganizerModule { }
+export class OrganizerModule {}

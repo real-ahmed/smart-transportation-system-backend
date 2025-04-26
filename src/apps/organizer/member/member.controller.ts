@@ -32,5 +32,12 @@ export class MemberController extends BaseOrganizerController {
         return this.memberService.findOne(id);
     }
 
+    @Get('memberships/requests')
+    @ApiOperation({ summary: 'Get all memberships request' })
+    @ApiQuery({ name: 'organization', required: true, type: String })
+    async getMembershipRequests(@Param('organization') organization: string) {
+        return this.memberService.getMembershipRequests(organization);
+    }
+
 
 }

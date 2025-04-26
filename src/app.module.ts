@@ -18,7 +18,6 @@ import { BusesModule } from './buses/buses.module';
 import { TripsModule } from './trips/trips.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { MembershipsModule } from './memberships/memberships.module';
-import { MembershipRequestsService } from './memberships/membership-requests.service';
 import * as path from 'path';
 
 @Module({
@@ -51,7 +50,6 @@ import * as path from 'path';
       provide: APP_GUARD,
       useClass: AuthGuard,
     },
-    MembershipRequestsService,
   ],
   controllers: [],
 })
