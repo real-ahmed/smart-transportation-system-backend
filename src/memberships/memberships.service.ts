@@ -8,6 +8,8 @@ import { Model, Types } from 'mongoose';
 import { NotificationEventsService } from 'src/notifications/notification-events.service';
 import { NotificationType } from 'src/notifications/notification.schema';
 import { MembersService } from 'src/users/services/members.service';
+import { StudentsService } from 'src/users/services/students.service';
+import { AddressesService } from 'src/addresses/addresses.service';
 
 @Injectable()
 export class MembershipsService {
@@ -16,6 +18,8 @@ export class MembershipsService {
     private membershipRequestModel: Model<MembershipRequestDocument>,
     private readonly notificationEventsService: NotificationEventsService,
     private readonly membersService: MembersService,
+    private readonly studentsService: StudentsService,
+    private readonly addressesService: AddressesService,
   ) {}
 
   async createMembershipRequest(
@@ -58,6 +62,44 @@ export class MembershipsService {
   async getMembershipRequests(filter) {
     const query: any = {};
     return this.membershipRequestModel.find(filter).exec();
+  }
+
+  async approveMembershipRequest(membershipRequestModelId: string) {
+    const request = await this.membershipRequestModel.findById(
+      membershipRequestModelId,
+    );
+    if (!request) {
+      throw new Error('Membership request not found');
+    }
+    if (request.status !== 'pending') {
+      throw new Error('Membership request is not pending');
+    }
+
+    let student: any = await this.studentsService.findBySsn(request.studentSsn);
+
+    if (!student) {
+      const address = await this.addressesService.create({
+        street: request.street,
+        city: request.city,
+        state: request.state,
+        postalCode: request.postalCode,
+        phoneNumber: request.phoneNumber,
+        owner: request.member,
+      });
+
+      student = await this.studentsService.create({
+        name: request.studentName,
+        ssn: request.studentSsn,
+        disabilities: request.studentDisabilities,
+        image: request.studentImage,
+        address: address,
+        phoneNumber: request.phoneNumber,
+        guardian: request.member,
+        organization: request.organization,
+      });
+    }
+
+    request.status = 'approved';
   }
 
   //   async getMembershipRequests(filter: {

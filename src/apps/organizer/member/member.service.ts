@@ -31,4 +31,8 @@ export class MemberService {
       status: 'pending',
     });
   }
+
+  async approvalMembershipRequest(membershipRequest) {
+    return this.memberships.approveMembershipRequest(membershipRequest);
+  }
 }

@@ -7,6 +7,8 @@ import {
 } from './membership-request.schema';
 import { NotificationsModule } from 'src/notifications/notifications.module';
 import { UsersModule } from 'src/users/users.module';
+import { AddressModule } from 'src/apps/organizer/address/address.module';
+import { AddressesModule } from 'src/addresses/addresses.module';
 
 @Module({
   imports: [
@@ -15,6 +17,7 @@ import { UsersModule } from 'src/users/users.module';
     ]),
     NotificationsModule,
     UsersModule,
+    AddressesModule,
   ],
 
   providers: [MembershipsService],

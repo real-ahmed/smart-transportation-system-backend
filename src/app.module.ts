@@ -44,6 +44,7 @@ import * as path from 'path';
     TripsModule,
     NotificationsModule,
     MembershipsModule,
+    AddressesModule,
   ],
   providers: [
     {
