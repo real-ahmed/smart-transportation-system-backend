@@ -14,4 +14,15 @@ export class StudentService {
       ],
     });
   }
+
+  // --- CRUD methods ---
+  async findOne(id: string) {
+    return this.studentsService.findOne(id);
+  }
+
+  async update(id: string, updateStudentDto: any) {
+    return this.studentsService.update(id, updateStudentDto);
+  }
+
+  
 }
