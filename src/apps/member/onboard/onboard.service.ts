@@ -19,7 +19,7 @@ export class OnboardService {
       phoneNumber: onboardDto.phoneNumber,
       postalCode: onboardDto.postalCode,
     };
-    this.membershipsService.createMembershipRequest(
+    return this.membershipsService.createMembershipRequest(
       member,
       organization,
       student,
