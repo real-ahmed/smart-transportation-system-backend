@@ -83,12 +83,12 @@ export class OnboardDto {
   @IsPostalCode('US')
   postalCode: string;
 
-  @ApiProperty({
-    description: 'Member ID (optional)',
-    required: false,
-    example: '507f1f77bcf86cd799439011',
-  })
-  @IsMongoId()
-  @IsOptional()
-  member?: string;
+  // @ApiProperty({
+  //   description: 'Member ID (optional)',
+  //   required: false,
+  //   example: '507f1f77bcf86cd799439011',
+  // })
+  // @IsMongoId()
+  // @IsOptional()
+  // member?: string;
 }
