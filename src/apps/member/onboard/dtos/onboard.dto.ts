@@ -14,7 +14,6 @@ export class OnboardDto {
     description: 'The ID of the organization',
     example: '507f1f77bcf86cd799439011',
   })
-  @IsString()
   organization: string;
 
   @ApiProperty({
@@ -65,7 +64,6 @@ export class OnboardDto {
     description: 'Contact phone number',
     example: '+1234567890',
   })
-  @IsPhoneNumber()
   phoneNumber: string;
 
   @ApiProperty({
