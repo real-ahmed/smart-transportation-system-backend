@@ -9,6 +9,7 @@ import {
   ArrayNotEmpty,
   IsNotEmpty,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class OnboardDto {
   @ApiProperty({
@@ -20,11 +21,14 @@ export class OnboardDto {
   organization: string;
 
   @ApiProperty({
-    description: 'student image',
-    example: '',
+    description: 'Student image file to upload',
+    type: 'string',
+    format: 'binary',
+    required: false,
   })
   @IsOptional()
-  studentImage: string;
+  @Type(() => String)
+  studentImage: any;
 
   @ApiProperty({
     description: 'Full name of the student',

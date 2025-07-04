@@ -1,12 +1,17 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { OnboardDto } from './dtos/onboard.dto';
 import { MembershipsService } from 'src/memberships/memberships.service';
+import { uploadFile } from 'src/common/helpers/file-upload.helper';
 
 @Injectable()
 export class OnboardService {
   constructor(private readonly membershipsService: MembershipsService) {}
 
-  onboardUser(request: Request, onboardDto: OnboardDto) {
+  onboardUser(
+    request: Request,
+    onboardDto: OnboardDto,
+    file?: Express.Multer.File,
+  ) {
     // Validate request and user data
     if (!request || !request['user'] || !request['user']['_id']) {
       throw new BadRequestException('Invalid user request');
@@ -35,6 +40,12 @@ export class OnboardService {
       phoneNumber: onboardDto.phoneNumber,
       postalCode: onboardDto.postalCode,
     };
+
+    // Handle file upload if provided
+    if (file) {
+      const imageUrl = uploadFile(file, 'students');
+      student['studentImage'] = imageUrl;
+    }
 
     return this.membershipsService.createMembershipRequest(
       member,
