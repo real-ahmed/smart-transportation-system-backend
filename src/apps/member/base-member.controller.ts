@@ -1,16 +1,16 @@
-// import { UseGuards, applyDecorators } from '@nestjs/common';
-// import { OrganizerGuard } from './common/guards/organizer.guard';
-// import { OrganizationAccessGuard } from './common/guards/organization-access.guard';
-// // Create a decorator that applies the guard
-// export function OrganizerProtected() {
-//   return applyDecorators(UseGuards(OrganizerGuard));
-// }
+import { UseGuards, applyDecorators } from '@nestjs/common';
+import { MemberGuard } from './common/guards/member.guard';
+import { MemberAccessGuard } from './common/guards/member-access.guard';
+// Create a decorator that applies the guard
+export function MemberProtected() {
+  return applyDecorators(UseGuards(MemberGuard));
+}
 
-// export function OrganizationAccessProtected() {
-//   return applyDecorators(UseGuards(OrganizationAccessGuard));
-// }
+export function MemberAccessProtected() {
+  return applyDecorators(UseGuards(MemberAccessGuard));
+}
 
-// // Base controller with guard applied
-// @OrganizerProtected()
-// @OrganizationAccessProtected()
-// export abstract class BaseOrganizerController { }
+// Base controller with guard applied
+@MemberProtected()
+@MemberAccessProtected()
+export abstract class BaseMemberController {}

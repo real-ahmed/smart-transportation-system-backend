@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { OnboardDto } from './dtos/onboard.dto';
 import { MembershipsService } from 'src/memberships/memberships.service';
 
@@ -7,11 +7,27 @@ export class OnboardService {
   constructor(private readonly membershipsService: MembershipsService) {}
 
   onboardUser(request: Request, onboardDto: OnboardDto) {
-    const member = request['user']['_id']; // Assuming userId is stored in the request object
-    const organization = onboardDto.organization; // Assuming organizationId is part of the onboardDto
+    // Validate request and user data
+    if (!request || !request['user'] || !request['user']['_id']) {
+      throw new BadRequestException('Invalid user request');
+    }
+
+    // Validate onboard DTO
+    if (!onboardDto) {
+      throw new BadRequestException('Onboard data is required');
+    }
+
+    const member = request['user']['_id'];
+    const organization = onboardDto.organization;
+
+    // Additional validation for required fields
+    if (!organization) {
+      throw new BadRequestException('Organization is required');
+    }
+
     const student = {
       studentName: onboardDto.studentName,
-      studentDisabilities: onboardDto.studentDisabilities, // should be an array of strings
+      studentDisabilities: onboardDto.studentDisabilities || [], // Default to empty array if not provided
       studentSsn: onboardDto.studentSsn,
       street: onboardDto.street,
       city: onboardDto.city,
@@ -19,6 +35,7 @@ export class OnboardService {
       phoneNumber: onboardDto.phoneNumber,
       postalCode: onboardDto.postalCode,
     };
+
     return this.membershipsService.createMembershipRequest(
       member,
       organization,

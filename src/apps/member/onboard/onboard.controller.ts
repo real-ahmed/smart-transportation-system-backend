@@ -8,6 +8,6 @@ export class OnboardController {
 
   @Post()
   async onboardUser(@Req() request, @Body() onboardDto: OnboardDto) {
-    this.onboardService.onboardUser(request, onboardDto);
+    return this.onboardService.onboardUser(request, onboardDto);
   }
 }
