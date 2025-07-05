@@ -8,15 +8,11 @@ export type MaintenanceDocument = Maintenance & Document;
 
 @Schema({ collection: 'buses' })
 export class Maintenance {
+  @Prop({ type: Types.ObjectId, ref: 'Bus' })
+  bus: Bus;
 
-    @Prop({ type: Types.ObjectId, ref: 'Bus' })
-    bus: Bus;
-
-    @Prop({ required: true })
-    maintenanceType: string;
-
-    @Prop({ required: true })
-    maintenanceDate: Date;
+  @Prop({ required: true })
+  maintenanceDate: Date;
 }
 
 export const MaintenanceSchema = SchemaFactory.createForClass(Maintenance);
